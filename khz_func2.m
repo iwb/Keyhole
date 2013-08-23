@@ -1,16 +1,16 @@
-function [ y ] = khz_func2( alpha, A, arguments, param )
+function [ y ] = khz_func2( alpha, A, arguments, param, plotdata )
 %KHZ_FUNC2 Summary of this function goes here
 %   Detailed explanation goes here
     
     % Berechnung des Normalenvektors
-    Avec = [arguments.prevA; A];
-    AlphaVec = [arguments.prevAlpha; alpha];
+    Avec = [arguments.prevApex; A];
+    AlphaVec = [arguments.prevRadius; alpha];
     
     winkel = 1*pi/180;
     tmp_x = Avec - AlphaVec .* (1-cos(winkel));
     tmp_y = AlphaVec .* sin(winkel);
     
-    P1 = [arguments.prevA; 0; arguments.prevZeta];
+    P1 = [arguments.prevApex; 0; arguments.prevZeta];
     P2 = [A; 0; arguments.zeta];
     P3 = [tmp_x(1); tmp_y(1); arguments.prevZeta];
     %P4 = [tmp_x(2); tmp_y(2); arguments.zeta];
@@ -45,6 +45,9 @@ function [ y ] = khz_func2( alpha, A, arguments, param )
     qa2 = qa2 * param.scaled.gamma;
     
     y = qa2 + (1 + param.scaled.hm) * param.scaled.Pe;
+    
+    if ~isempty(plotdata)
+    end
 end
 
 

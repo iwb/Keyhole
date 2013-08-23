@@ -9,7 +9,7 @@ z = point(3,:);
 r = sqrt(x.^2 + y.^2);
 
 fokus = param.fokus;
-Rl = param.Rl;
+Rl = param.scaled.Rl;
 waveLength = param.waveLength;
 
 sumz = z + fokus;

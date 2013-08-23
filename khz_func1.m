@@ -1,8 +1,8 @@
-function [ y ] = khz_func1( A, arguments, param )
+function [ y ] = khz_func1( A, arguments, param, plotdata )
 %KHZ_FUNC1 Summary of this function goes here
 %   Detailed explanation goes here
     
-    P1 = [arguments.prevA; 0; arguments.prevZeta];
+    P1 = [arguments.prevApex; 0; arguments.prevZeta];
     P2 = [A; 0; arguments.zeta];
     
     d1 = P1 - P2;
@@ -19,5 +19,11 @@ function [ y ] = khz_func1( A, arguments, param )
     qa0 = param.scaled.gamma * mean(intensity, 2) * Az;
     
     y = qa0 - (1 + param.scaled.hm) * param.scaled.Pe;
+    
+    if ~isempty(plotdata)
+        plotdata.HeatFlow.add(qa0);
+        plotdata.Intensity.add(intensity);
+        plotdata.Angle.add(acos(dot(n1, poyntVec)));
+    end
 end
 

@@ -20,7 +20,7 @@ param.Hm = 2.75e5; % [J/kg]
 param.w0 = 300e-6; % 25µm Strahlradius [m]
 param.P = 3000; % [W]
 param.I0 = param.P * 2/(pi*param.w0^2); % [W/m2]
-param.v = 5/60; % [m/s]
+param.v = 10/60; % [m/s]
 
 param.waveLength = 1064e-9; % Wellenlänge des Lasers [m]
 

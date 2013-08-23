@@ -18,156 +18,117 @@ alpha0 = ((vhp1 - vhp2)^2 + versatz^2) / (2 * (vhp1 - vhp2)) / param.w0;
 
 %% Skalierung und Diskretisierung
 
-%I = @(distance) param.I0 * exp(-distance.^2 ./ (2 * param.w0^2)); % [W/m^2]
-
 % Diskretisierung der z-Achse
 dz = -10e-6;
 d_zeta = dz/param.w0;
 
-A = zeros(1,100);
-alpha = zeros(1,100);
+Apex = java.util.ArrayList();
+Apex.ensureCapacity(1000);
+Apex.add(A0);
 
-A(1) = A0;
-alpha(1) = alpha0;
+Radius =java.util.ArrayList();
+Radius.ensureCapacity(1000);
+Radius.add(alpha0);
 
-%% Iteration über die z-Achse
+%% Variablen für die Schelife
 zeta = 0;
 prevZeta = 0;
-zindex = 1;
-deltaA = 10;
-deltaAlpha = 10;
-loopindex = 1;
+zindex = 0;
 
-MyPlotArray = zeros(2, 0);
-global AAzz mu;
+currentA = A0;
+currentAlpha = alpha0;
 
-figure;
+% Plotdaten
+plotdata = struct();
+plotdata.Apex = Apex;
+plotdata.Radius = Radius;
+plotdata.Angle = java.util.ArrayList();
+plotdata.Intensity = java.util.ArrayList();
+plotdata.HeatFlow = java.util.ArrayList();
+plotdata.z_axis = 0;
+
+plotdata.Angle.add(0);
+plotdata.Intensity.add(0);
+plotdata.HeatFlow.add(0);
+
+h = NaN;
 
 %% Schleife über die Tiefe
-while (A(zindex) > -2)
-	
+while (currentA > -2)
+    
+    zindex = zindex + 1;
     prevZeta = zeta;
     zeta = zeta + d_zeta;
-    zindex = zindex + 1;
     
-    if zindex > numel(A)
-        A(zindex * 2) = 0;
-        alpha(zindex * 2) = 0;
-    end
+    plotdata.z_axis = horzcat(plotdata.z_axis, zeta);
     
     %% Nullstellensuche mit MATLAB-Verfahren
     % Variablen für Nullstellensuche
     arguments = struct();
     arguments.prevZeta = prevZeta;
     arguments.zeta = zeta;
-    arguments.prevA = A(zindex-1);
-    arguments.prevAlpha = alpha(zindex-1);
+    arguments.prevApex = currentA;
+    arguments.prevRadius = currentAlpha;
     
-    % Berechnung des Scheitelpunktes
-    func1 = @(A) khz_func1(A, arguments, param);
-    A(zindex) = fzero(func1, A(zindex-1));
-    
-    MyPlotArray(1, end+1) = AAzz;
-    MyPlotArray(2, end) = mu;
-    
-    if mod(loopindex, 10) == 0
-       subplot(2,1,1);
-       plot(MyPlotArray(1, :));
-       hold all;
-       plot(MyPlotArray(2, :));
-       hold off;
-       drawnow;        
-    end
+    % Berechnung des neuen Scheitelpunktes
+    func1 = @(A) khz_func1(A, arguments, param, []);
+    currentA = fzero(func1, currentA);
+    % Plotdata befüllen lassen
+    khz_func1(currentA, arguments, param, plotdata);
     
     % Abbruchkriterium
-    if(isnan(A(zindex)))
-       A = A(1:zindex-1);
-       alpha = alpha(1:zindex-1);
-       fprintf('Abbruch wegen A=Nan. Endgültige Tiefe: %3.0f\n', zeta);
-       break;
+    if(isnan(currentA))
+        fprintf('Abbruch wegen Apex=Nan. Endgültige Tiefe: %3.0f\n', zeta);
+        break;
     end
     
     % Berechnung des Radius
-    func2 = @(alpha) khz_func2( alpha, A(zindex), arguments, param);
-    alpha_interval(1) = max(A(zindex), 0); % Minimalwert
-    alpha_interval(2) = alpha(zindex-1); % Maximalwert
-    alpha(zindex) = fzero(func2, alpha_interval(2));
-    
-%     if (A(zindex) - 2*alpha(zindex) > A(zindex-1) - 2*alpha(zindex-1))
-%         % Der Radius darf eigentlich nicht mehr wachsen....
-%         alpha(zindex) = alpha(zindex-1);
-%     end
-
-%     if (zindex > 75)
-%         expected_radius = 2*alpha(zindex-1) - alpha(zindex-2);
-%         if (alpha(zindex) > expected_radius)
-%             % Der Radius darf eigentlich nicht mehr wachsen....
-%             alpha(zindex) = expected_radius;
-%         end
-%     end
-        
+    func2 = @(alpha) khz_func2(alpha, currentA, arguments, param, []);
+    alpha_interval(1) = 0; % Minimalwert
+    alpha_interval(2) = 2*alpha0; % Maximalwert
+    currentAlpha = fzero(func2, alpha_interval);
+    % Plotdata befüllen lassen
+    khz_func2(currentAlpha, currentA, arguments, param, plotdata);
     
     % Abbruchkriterium
-    if(isnan(alpha(zindex)))
-       A = A(1:zindex-1);
-       alpha = alpha(1:zindex-1);
-       fprintf('Abbruch wegen alpha=Nan. Endgültige Tiefe: %3.0f\n', zeta);
-       break;
+    if(isnan(currentAlpha))
+        fprintf('Abbruch wegen Radius=Nan. Endgültige Tiefe: %3.0f\n', zeta);
+        break;
     end
     
+    % Werte übernehmen und sichern
+    Apex.add(currentA);
+    Radius.add(currentAlpha);
+    
     if (false)
-        xx = linspace(0, 3, 100);
+        xx = linspace(0, 3, 100); %#ok
         for ii=1:100
             yy(ii)=func1(xx(ii));
         end
         plot(xx, yy);
     end
     
-    % Plot
-    if mod(loopindex, 10) == 0
-        
-        fprintf('Aktuelle Tiefe z=%3.0f, r=%8.3f\n', zeta, alpha(zindex));
-        
-        subplot(2,1,2);
-        plot(A);
-        hold all;
-        plot(A-2*alpha);
-        hold off;
-        drawnow;
+    if (zindex > 60 && currentAlpha >  arguments.prevRadius)
+       disp ''; 
     end
     
-    loopindex = loopindex + 1;    
+    % Plot
+    if mod(zindex, 1) == 0
+        
+        fprintf('Aktuelle Tiefe z=%5.2f, r=%8.3f\n', zeta, currentAlpha);
+        
+        plotKeyhole(plotdata);
+    end
 end
 
-plot(A);
-hold all;
-plot(A-2*alpha);
-hold off;
+plotKeyhole(plotdata);
 
 
 figure;
-plot(alpha);
+plot(Radius);
 
 
 fprintf('Endgültige Tiefe: z=%5.0f µm\n', zeta *-param.w0/1e-6);
-
-%     % Berechnung der drei DGLs
-%     deltaA = (1/(1 + hm - param.b1) * (gamma*qa0 - param.b1/Q(i)));
-%     A(i+1,1) = A(i,1) + deltaA*d_tau;
-%
-%     deltaAlpha = (1/(1 + hm) * ((gamma*qa2 - param.b2/Q(i)) + ...
-%         (1 + hm + param.b2)/(1 + hm - param.b1) * (gamma*qa0 - param.b1/Q(i))));
-%     alpha(i+1,1) = alpha(i,1) + deltaAlpha*d_tau;
-%
-%     deltaQ = (gamma*qa0 - (1 + hm)*deltaA/d_tau);
-%     Q(i+1,1) = Q(i,1) + deltaQ*d_tau;
-%
-
-
-
-
-
-
 
 
 
