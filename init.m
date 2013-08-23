@@ -33,10 +33,10 @@ param.T0 = 300; %[K] Umgebungstemperatur
 
 param.fokus = 0e-6;
 
-param.Rl = pi * param.w0 / param.waveLength; % [-]
-param.Rl = 0.001 /param.w0; % [-]
-
 param.scaled = struct();
+% Rayleighlänge
+param.scaled.Rl = pi * param.w0 / param.waveLength; % [-]
+param.scaled.Rl = 0.001 /param.w0; % [-]
 % Skalierter Vorschub
 param.scaled.Pe = param.w0/param.kappa * param.v;
 % Skalierte Maximalintensität
