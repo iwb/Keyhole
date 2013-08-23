@@ -98,7 +98,7 @@ while (currentA > -2)
     Apex.add(currentA);
     Radius.add(currentAlpha);
     
-    if (true)
+    if (false)
         xx = linspace(-1, 3, 100);
         for ii=1:100
             yy(ii)=func2(xx(ii));
@@ -118,7 +118,7 @@ while (currentA > -2)
         
         fprintf('Aktuelle Tiefe z=%5.2f, r=%8.3f\n', zeta, currentAlpha);
         
-        %plotKeyhole(plotdata, param);
+        plotKeyhole(plotdata, param);
     end
 end
 

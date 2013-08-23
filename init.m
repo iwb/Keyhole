@@ -17,10 +17,10 @@ param.epsilon=0.25;
 
 param.Hm = 2.75e5; % [J/kg]
 
-param.w0 = 100e-6; % 25µm Strahlradius [m]
-param.P = 3000; % [W]
+param.w0 = 25e-6; % 25µm Strahlradius [m]
+param.P = 100; % [W]
 param.I0 = param.P * 2/(pi*param.w0^2); % [W/m2]
-param.v = 1; % [m/s]
+param.v = 13.5/60; % [m/s]
 
 param.waveLength = 1064e-9; % Wellenlänge des Lasers [m]
 
@@ -36,7 +36,7 @@ param.fokus = 0e-6;
 param.scaled = struct();
 % Rayleighlänge
 %param.scaled.Rl = pi * param.w0 / param.waveLength; % [-]
-param.scaled.Rl = 0.001 /param.w0; % [-]
+param.scaled.Rl = 0.7 / param.w0; % [-]
 % Skalierter Vorschub
 param.scaled.Pe = param.w0/param.kappa * param.v;
 % Skalierte Maximalintensität
