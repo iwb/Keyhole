@@ -19,7 +19,7 @@ alpha0 = ((vhp1 - vhp2)^2 + versatz^2) / (2 * (vhp1 - vhp2)) / param.w0;
 %% Skalierung und Diskretisierung
 
 % Diskretisierung der z-Achse
-dz = -10e-6;
+dz = -5e-6;
 d_zeta = dz/param.w0;
 
 Apex = java.util.ArrayList();
@@ -60,8 +60,6 @@ while (currentA > -2)
     prevZeta = zeta;
     zeta = zeta + d_zeta;
     
-    plotdata.z_axis = horzcat(plotdata.z_axis, zeta);
-    
     %% Nullstellensuche mit MATLAB-Verfahren
     % Variablen für Nullstellensuche
     arguments = struct();
@@ -73,8 +71,6 @@ while (currentA > -2)
     % Berechnung des neuen Scheitelpunktes
     func1 = @(A) khz_func1(A, arguments, param, []);
     currentA = fzero(func1, currentA);
-    % Plotdata befüllen lassen
-    khz_func1(currentA, arguments, param, plotdata);
     
     % Abbruchkriterium
     if(isnan(currentA))
@@ -87,45 +83,46 @@ while (currentA > -2)
     alpha_interval(1) = 0; % Minimalwert
     alpha_interval(2) = 2*alpha0; % Maximalwert
     currentAlpha = fzero(func2, alpha_interval);
-    % Plotdata befüllen lassen
-    khz_func2(currentAlpha, currentA, arguments, param, plotdata);
     
     % Abbruchkriterium
     if(isnan(currentAlpha))
         fprintf('Abbruch wegen Radius=Nan. Endgültige Tiefe: %3.0f\n', zeta);
         break;
     end
+    % Plotdata befüllen lassen
+    khz_func1(currentA, arguments, param, plotdata);
+    % Plotdata befüllen lassen
+    khz_func2(currentAlpha, currentA, arguments, param, plotdata);
     
     % Werte übernehmen und sichern
     Apex.add(currentA);
     Radius.add(currentAlpha);
     
-    if (false)
-        xx = linspace(0, 3, 100); %#ok
+    if (true)
+        xx = linspace(-1, 3, 100);
         for ii=1:100
-            yy(ii)=func1(xx(ii));
+            yy(ii)=func2(xx(ii));
         end
         plot(xx, yy);
+        refline(0,0);
+        drawnow;
     end
     
     if (zindex > 60 && currentAlpha >  arguments.prevRadius)
        disp ''; 
     end
     
-    % Plot
+    % Plot    
+    plotdata.z_axis = horzcat(plotdata.z_axis, zeta);
     if mod(zindex, 1) == 0
         
         fprintf('Aktuelle Tiefe z=%5.2f, r=%8.3f\n', zeta, currentAlpha);
         
-        plotKeyhole(plotdata);
+        %plotKeyhole(plotdata, param);
     end
 end
 
-plotKeyhole(plotdata);
-
-
-figure;
-plot(Radius);
+plotKeyhole(plotdata, param);
 
 
 fprintf('Endgültige Tiefe: z=%5.0f µm\n', zeta *-param.w0/1e-6);
