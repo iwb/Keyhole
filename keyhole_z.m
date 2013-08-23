@@ -90,7 +90,7 @@ while (A(zindex) > -2)
     % Berechnung des Radius
     func2 = @(alpha) khz_func2( alpha, A(zindex), arguments, param);
     alpha_interval(1) = max(A(zindex), 0); % Minimalwert
-    alpha_interval(2) = alpha(zindex-1); % Maximalwert
+    alpha_interval(2) = alpha(zindex-1)-0.1; % Maximalwert
     alpha(zindex) = fzero(func2, alpha_interval(2));
     
 %     if (A(zindex) - 2*alpha(zindex) > A(zindex-1) - 2*alpha(zindex-1))
