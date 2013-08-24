@@ -45,11 +45,13 @@ plotdata.Radius = Radius;
 plotdata.Angle = java.util.ArrayList();
 plotdata.Intensity = java.util.ArrayList();
 plotdata.HeatFlow = java.util.ArrayList();
+plotdata.Fresnel = java.util.ArrayList();
 plotdata.z_axis = 0;
 
 plotdata.Angle.add(0);
 plotdata.Intensity.add(0);
 plotdata.HeatFlow.add(0);
+plotdata.Fresnel.add(0);
 
 h = NaN;
 
@@ -123,7 +125,6 @@ while (currentA > -2)
 end
 
 plotKeyhole(plotdata, param);
-
 
 fprintf('Endgültige Tiefe: z=%5.0f µm\n', zeta *-param.w0/1e-6);
 

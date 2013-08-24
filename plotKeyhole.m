@@ -7,6 +7,7 @@ function plotKeyhole( plotdata, param )
         Angle =  cell2mat(plotdata.Angle.toArray.cell);
         Intensity = cell2mat(plotdata.Intensity.toArray.cell);
         HeatFlow = cell2mat(plotdata.HeatFlow.toArray.cell);
+        Fresnel = cell2mat(plotdata.Fresnel.toArray.cell);
         
         
         subplot(1, 3, 1);
@@ -32,6 +33,8 @@ function plotKeyhole( plotdata, param )
         plot(Intensity, plotdata.z_axis, 'r');
 %         hold all;
 %         plot(HeatFlow, plotdata.z_axis, 'c');
+        hold all
+        plot(Fresnel, plotdata.z_axis, '--g')
         hold off;
         drawnow;
 end

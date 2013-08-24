@@ -24,6 +24,7 @@ function [ y ] = khz_func1( A, arguments, param, plotdata )
         plotdata.HeatFlow.add(qa0);
         plotdata.Intensity.add(intensity);
         plotdata.Angle.add(acos(dot(-n1, poyntVec)));
+        plotdata.Fresnel.add(Az);
     end
 end
 
