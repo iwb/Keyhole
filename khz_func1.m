@@ -18,7 +18,7 @@ function [ y ] = khz_func1( A, arguments, param, plotdata )
     Az = calcFresnel(poyntVec, n1, param);
     qa0 = param.I0 * intensity * Az; %param.scaled.gamma * mean(intensity, 2) * Az;
     
-    y = qa0 - ((1 + param.Hm) * param.v) * param.rho; %y = qa0 - (1 + param.scaled.hm) * param.scaled.Pe;
+    y = qa0 - (1 + param.Hm/(param.cp*(param.Tv - param.T0))) * (param.w0*param.v)/param.kappa; %y = qa0 - (1 + param.scaled.hm) * param.scaled.Pe;
     
     if ~isempty(plotdata)
         plotdata.HeatFlow.add(qa0);
