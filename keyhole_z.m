@@ -103,7 +103,7 @@ while (currentA > -2)
     if (false)
         xx = linspace(-1, 3, 100);
         for ii=1:100
-            yy(ii)=func2(xx(ii));
+            yy(ii)=func1(xx(ii));
         end
         plot(xx, yy);
         refline(0,0);
@@ -118,7 +118,7 @@ while (currentA > -2)
     plotdata.z_axis = horzcat(plotdata.z_axis, zeta);
     if mod(zindex, 1) == 0
         
-        fprintf('Aktuelle Tiefe z=%5.2f, r=%8.3f\n', zeta, currentAlpha);
+        fprintf('Aktuelle Tiefe z=%5.2fµm, r=%8.3fµm\n', zeta*1e6, currentAlpha*1e6);
         
         plotKeyhole(plotdata, param);
     end
