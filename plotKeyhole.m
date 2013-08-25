@@ -19,8 +19,8 @@ function plotKeyhole( plotdata, param )
         
         x = Apex(end);
         z = plotdata.z_axis(end);
-        [p, i] = calcPoynting([x; 0; z], param);
-        quiver(x, z, -p(1), -p(3), '*');
+        %[p, i] = calcPoynting([x; 0; z], param);
+        %quiver(x, z, -p(1), -p(3), '*');
         
         hold off;
         drawnow;

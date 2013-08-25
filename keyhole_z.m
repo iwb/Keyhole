@@ -12,15 +12,15 @@ vhp2 = vhp_dgl(versatz, param);
 
 
 %% Startwerte
-A0 = vhp1  / param.w0; % VHP an der Blechoberfläche
+A0 = vhp1 ; %/ param.w0; % VHP an der Blechoberfläche
 % Radius der Schmelzfront an der Oberfläche
-alpha0 = ((vhp1 - vhp2)^2 + versatz^2) / (2 * (vhp1 - vhp2)) / param.w0;
+alpha0 = ((vhp1 - vhp2)^2 + versatz^2) / (2 * (vhp1 - vhp2)); %/ param.w0;
 
 %% Skalierung und Diskretisierung
 
 % Diskretisierung der z-Achse
 dz = -5e-6;
-d_zeta = dz/param.w0;
+d_zeta = dz; %/param.w0;
 
 Apex = java.util.ArrayList();
 Apex.ensureCapacity(1000);
@@ -30,7 +30,7 @@ Radius =java.util.ArrayList();
 Radius.ensureCapacity(1000);
 Radius.add(alpha0);
 
-%% Variablen für die Schelife
+%% Variablen für die Schleife
 zeta = 0;
 prevZeta = 0;
 zindex = 0;

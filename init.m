@@ -4,9 +4,9 @@
 
 fprintf('==========================================\n');
 
-param = struct();
-
 %% Konstanten
+% Dimensionsbehaftete Größen
+param = struct();
 param.kappa = 6.7e-6; % = lambda/(rho*cp) [m2/s]
 param.b1 = 1/10; % [-]
 param.b2 = 3/5; % [-]
@@ -29,10 +29,13 @@ param.cp = 711.4; % [J / kg K]
 
 param.Tm = 1811; % [K] Schmelztemperatur
 param.Tv = 3273; % [K] Verdampfungstemperatur
-param.T0 = 300; %[K] Umgebungstemperatur
+param.T0 = 300; % [K] Umgebungstemperatur
 
-param.fokus = 0e-6;
+param.fokus = 0e-6; % Fokusabstand zur Bauteiloberfläche [m]
 
+param.Rl = 0.7e-3; % Rayleighlänge [m]
+
+% Skallierte Größen
 param.scaled = struct();
 % Rayleighlänge
 %param.scaled.Rl = pi * param.w0 / param.waveLength; % [-]
