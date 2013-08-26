@@ -45,6 +45,7 @@ function [ y ] = khz_func2( alpha, A, arguments, param, plotdata )
     deltaT = param.Tv - param.T0;
     
     y = qa2/(param.lambda * deltaT) + param.v/param.kappa + (param.Hm * param.v)/(param.cp * deltaT * param.kappa);
+    % 0 = qa2 + (1+hm) * Pe
     
     if ~isempty(plotdata)
     end

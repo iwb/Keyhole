@@ -33,13 +33,13 @@ param.T0 = 300; % [K] Umgebungstemperatur
 
 param.fokus = 0e-6; % Fokusabstand zur Bauteiloberfläche [m]
 
-%param.Rl = 0.7e-3; % Rayleighlänge [m]
-param.Rl = pi * param.w0^2 / param.waveLength; % Ideale Rayleighlänge [m]
+param.Rl = 0.7e-3; % Rayleighlänge [m]
+%param.Rl = pi * param.w0^2 / param.waveLength; % Ideale Rayleighlänge [m]
 
 % Skallierte Größen
 param.scaled = struct();
 % Rayleighlänge
-%param.scaled.Rl = pi * param.w0 / param.waveLength; % [-]
+%param.scaled.Rl = pi * param.w0^2 / param.waveLength; % [-]
 param.scaled.Rl = 0.7e-3 / param.w0; % [-]
 % Skalierter Vorschub
 param.scaled.Pe = param.w0/param.kappa * param.v;
