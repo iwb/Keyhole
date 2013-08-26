@@ -103,7 +103,7 @@ while (currentA > -2)
     if (false)
         xx = linspace(-A0, arguments.prevApex, 100);
         for ii=1:100
-            yy(ii)=func1(xx(ii));
+            yy(ii)=func2(xx(ii));
         end
         plot(xx, yy);
         refline(0,0);
@@ -136,7 +136,7 @@ end
 
 plotKeyhole(plotdata, param);
 
-fprintf('Endgültige Tiefe: z=%5.0f µm\n', zeta *-param.w0/1e-6);
+fprintf('Endgültige Tiefe: z=%5.0fµm\n', zeta*1e6);
 
 
 
