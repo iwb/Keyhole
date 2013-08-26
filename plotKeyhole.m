@@ -25,8 +25,8 @@ function plotKeyhole( plotdata, param )
         
         line([0 0], [0 z], 'Color', [0.5 0.5 0.5])
         hold off;
-        ylabel('Tiefe [w0]');
-        xlabel('X-Richtung [w0]');
+        ylabel('Tiefe [w_0]');
+        xlabel('X-Richtung [w_0]');
         %legend('Scheitel', 'Rückwand', 'Poynting')
         drawnow;
         
@@ -42,7 +42,7 @@ function plotKeyhole( plotdata, param )
         hold all
         plot(Fresnel, plotdata.z_axis, '--g')
         hold off;
-        ylabel('Tiefe [w0]');
+        ylabel('Tiefe [w_0]');
         xlabel('Wert');
         legend('Winkel [°/100]', 'Intensität [-]', 'Fresnelkoeff. [-]')
         drawnow;
