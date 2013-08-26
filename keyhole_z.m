@@ -82,7 +82,7 @@ while (currentA > -2)
     
     % Berechnung des Radius
     func2 = @(alpha) khz_func2(alpha, currentA, arguments, param, []);
-    alpha_interval(1) = 0; % Minimalwert
+    alpha_interval(1) = 0.01*alpha0; % Minimalwert
     alpha_interval(2) = 2*alpha0; % Maximalwert
     currentAlpha = fzero(func2, alpha_interval);
     
@@ -100,7 +100,7 @@ while (currentA > -2)
     Apex.Add(currentA);
     Radius.Add(currentAlpha);
     
-    if (true)
+    if (0)
 %         xx = linspace(-A0, arguments.prevApex*2, 100);
 %         for ii=1:100
 %             yy(ii)=func1(xx(ii));
@@ -110,7 +110,7 @@ while (currentA > -2)
 %         drawnow;
         
         
-        xx = linspace(-2*alpha0, 3*alpha0, 100);
+        xx = linspace(0, 3*alpha0, 100);
         for ii=1:100
             yy(ii)=func2(xx(ii));
         end
@@ -126,11 +126,11 @@ while (currentA > -2)
     
     % Plot    
     plotdata.z_axis = horzcat(plotdata.z_axis, zeta);
-    if mod(zindex, 10) == 0
+    if mod(zindex, 20) == 0
         
         fprintf('Aktuelle Tiefe z=%5.2fµm, r=%8.3fµm\n', zeta*1e6, currentAlpha*1e6);
         
-        %plotKeyhole(plotdata, param);
+        plotKeyhole(plotdata, param);
     end
 end
 

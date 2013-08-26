@@ -13,28 +13,23 @@ function [ y ] = khz_func2( alpha, A, arguments, param, plotdata )
     P1 = [arguments.prevApex; 0; arguments.prevZeta];
     P2 = [A; 0; arguments.zeta];
     P3 = [tmp_x(1); tmp_y(1); arguments.prevZeta];
-    %P4 = [tmp_x(2); tmp_y(2); arguments.zeta];
+    P4 = [tmp_x(2); tmp_y(2); arguments.zeta];
     
     d1 = P1 - P2;
     n1 = [-d1(3); 0; d1(1)]; % [x; y; z]
     n1 = n1 ./ norm(n1);
     
     d2 = P3 - P2;
-    n2 = cross(d1, d2);
+    d3 = P4 - P2;
+    n2 = cross(d2, d3);
     n2 = n2 ./ norm(n2);
     
     % Berechnung des Poyntingvektors
     %PP1 = mean([P1, P2], 2);
     
-    tmp_x = Avec - AlphaVec .* (1-cos(winkel/2));
-    tmp_y = AlphaVec .* sin(winkel/2);
-    %ds = mean(winkel/2 * AlphaVec);
-    ds = winkel/2;
+    ds = winkel;
     
-    %PP2 = [mean(tmp_x); mean(tmp_y); mean([arguments.prevZeta, arguments.zeta])];
-    PP2 = [tmp_x(2); tmp_y(2); arguments.zeta];
-    
-    [poyntVec, intensity] = calcPoynting([P2, PP2], param);
+    [poyntVec, intensity] = calcPoynting([P2, P4], param);
     
     % Berechnung von qa0 und qa2
     Az = calcFresnel(poyntVec, [n1, n2], param);
@@ -44,7 +39,7 @@ function [ y ] = khz_func2( alpha, A, arguments, param, plotdata )
     qa2 = 2*(qa1 - qa0)/ds^2;    % Da qa0 minimal größer ist, wird qa2 negtiv.
     deltaT = param.Tv - param.T0;
     
-    y = qa2/(param.lambda * deltaT) + param.v/param.kappa + (param.Hm * param.v)/(param.cp * deltaT * param.kappa);
+    y = qa2/(param.lambda * deltaT) + param.v/param.kappa * (1 + param.Hm/(param.cp * deltaT));
     % 0 = qa2 + (1+hm) * Pe
     
     if ~isempty(plotdata)
