@@ -43,6 +43,7 @@ function [ y ] = khz_func2( alpha, A, arguments, param, plotdata )
     qa1 = param.I0 * intensity(2) * Az(2);
     qa2 = 2*(qa1 - qa0)/ds^2;    % Da qa0 minimal größer ist, wird qa2 negtiv.
     %qa2 = qa2 * param.scaled.gamma;
+    deltaT = param.Tv - param.T0;
     
     y = qa2/(param.lambda * deltaT) + param.v/param.kappa + (param.Hm * param.v)/(param.cp * deltaT * param.kappa); %y = qa2 + (1 + param.scaled.hm) * param.scaled.Pe;
     

@@ -20,7 +20,7 @@ function plotKeyhole( plotdata, param )
         x = Apex(end);
         z = plotdata.z_axis(end);
         [p, i] = calcPoynting([x; 0; z], param);
-        p = p.*1e-6;
+        p = p.*1e-3;
         quiver(x, z, -p(1), -p(3), '*');
         
         hold off;
@@ -29,6 +29,7 @@ function plotKeyhole( plotdata, param )
         subplot(1, 3, [2 3]);
         axis ij
         
+        Angle= Angle/pi*1.8;
         plot(Angle, plotdata.z_axis, 'b');
         hold all;
         plot(Intensity, plotdata.z_axis, 'r');
