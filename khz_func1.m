@@ -21,10 +21,10 @@ function [ y ] = khz_func1( A, arguments, param, plotdata )
     y = qa0 - (1 + param.scaled.hm) * param.scaled.Pe;
     
     if ~isempty(plotdata)
-        plotdata.HeatFlow.add(qa0);
-        plotdata.Intensity.add(intensity);
-        plotdata.Angle.add(acos(dot(-n1, poyntVec)));
-        plotdata.Fresnel.add(Az);
+        plotdata.HeatFlow.Add(qa0);
+        plotdata.Intensity.Add(intensity);
+        plotdata.Angle.Add(acos(dot(-n1, poyntVec)));
+        plotdata.Fresnel.Add(Az);
     end
 end
 

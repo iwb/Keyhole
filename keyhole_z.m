@@ -22,13 +22,13 @@ alpha0 = ((vhp1 - vhp2)^2 + versatz^2) / (2 * (vhp1 - vhp2)) / param.w0;
 dz = -5e-6;
 d_zeta = dz / param.w0;
 
-Apex = java.util.ArrayList();
-Apex.ensureCapacity(1000);
-Apex.add(A0);
+Apex = List();
+Apex.EnsureCapacity(1000);
+Apex.Add(A0);
 
-Radius =java.util.ArrayList();
-Radius.ensureCapacity(1000);
-Radius.add(alpha0);
+Radius = List();
+Radius.EnsureCapacity(1000);
+Radius.Add(alpha0);
 
 %% Variablen für die Schleife
 zeta = 0;
@@ -42,16 +42,16 @@ currentAlpha = alpha0;
 plotdata = struct();
 plotdata.Apex = Apex;
 plotdata.Radius = Radius;
-plotdata.Angle = java.util.ArrayList();
-plotdata.Intensity = java.util.ArrayList();
-plotdata.HeatFlow = java.util.ArrayList();
-plotdata.Fresnel = java.util.ArrayList();
+plotdata.Angle = List();
+plotdata.Intensity = List();
+plotdata.HeatFlow = List();
+plotdata.Fresnel = List();
 plotdata.z_axis = 0;
 
-plotdata.Angle.add(0);
-plotdata.Intensity.add(0);
-plotdata.HeatFlow.add(0);
-plotdata.Fresnel.add(0);
+plotdata.Angle.Add(NaN);
+plotdata.Intensity.Add(NaN);
+plotdata.HeatFlow.Add(NaN);
+plotdata.Fresnel.Add(NaN);
 
 %% Schleife über die Tiefe
 while (currentA > -2)
@@ -95,8 +95,8 @@ while (currentA > -2)
     khz_func2(currentAlpha, currentA, arguments, param, plotdata);
     
     % Werte übernehmen und sichern
-    Apex.add(currentA);
-    Radius.add(currentAlpha);
+    Apex.Add(currentA);
+    Radius.Add(currentAlpha);
     
     if (false)
         xx = linspace(-A0, arguments.prevApex, 100);
