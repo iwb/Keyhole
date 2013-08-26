@@ -20,10 +20,14 @@ function plotKeyhole( plotdata, param )
         x = Apex(end);
         z = plotdata.z_axis(end);
         [p, i] = calcPoynting([x; 0; z], param);
-        p = p.*1e-3;
+        p = p.*4e-4;
         quiver(x, z, -p(1), -p(3), '*');
         
+        line([0 0], [0 z], 'Color', [0.5 0.5 0.5])
         hold off;
+        ylabel('Tiefe [m]');
+        xlabel('X-Richtung [m]');
+        %legend('Scheitel', 'Rückwand', 'Poynting')
         drawnow;
         
         subplot(1, 3, [2 3]);
@@ -34,10 +38,13 @@ function plotKeyhole( plotdata, param )
         hold all;
         plot(Intensity, plotdata.z_axis, 'r');
 %         hold all;
-%         plot(HeatFlow, plotdata.z_axis, 'c');
+%         plot(HeatFlow./1e10, plotdata.z_axis, 'c');
         hold all
         plot(Fresnel, plotdata.z_axis, '--g')
         hold off;
+        ylabel('Tiefe [m]');
+        xlabel('Wert');
+        legend('Winkel [°/100]', 'Intensität [-]', 'Fresnelkoeff. [-]')
         drawnow;
 end
 
