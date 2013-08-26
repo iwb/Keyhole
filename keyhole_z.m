@@ -12,15 +12,15 @@ vhp2 = vhp_dgl(versatz, param);
 
 
 %% Startwerte
-A0 = vhp1 ; %/ param.w0; % VHP an der Blechoberfläche
+A0 = vhp1 / param.w0; % VHP an der Blechoberfläche
 % Radius der Schmelzfront an der Oberfläche
-alpha0 = ((vhp1 - vhp2)^2 + versatz^2) / (2 * (vhp1 - vhp2)); %/ param.w0;
+alpha0 = ((vhp1 - vhp2)^2 + versatz^2) / (2 * (vhp1 - vhp2)) / param.w0;
 
 %% Skalierung und Diskretisierung
 
 % Diskretisierung der z-Achse
 dz = -5e-6;
-d_zeta = dz; %/param.w0;
+d_zeta = dz / param.w0;
 
 Apex = java.util.ArrayList();
 Apex.ensureCapacity(1000);
@@ -52,8 +52,6 @@ plotdata.Angle.add(0);
 plotdata.Intensity.add(0);
 plotdata.HeatFlow.add(0);
 plotdata.Fresnel.add(0);
-
-h = NaN;
 
 %% Schleife über die Tiefe
 while (currentA > -2)
@@ -128,7 +126,7 @@ while (currentA > -2)
     plotdata.z_axis = horzcat(plotdata.z_axis, zeta);
     if mod(zindex, 10) == 0
         
-        fprintf('Aktuelle Tiefe z=%5.2fµm, r=%8.3fµm\n', zeta*1e6, currentAlpha*1e6);
+        fprintf('Aktuelle Tiefe z=%5.2fµm, r=%8.3fµm\n', zeta*param.w0*1e6, currentAlpha*param.w0*1e6);
         
         plotKeyhole(plotdata, param);
     end
@@ -136,7 +134,7 @@ end
 
 plotKeyhole(plotdata, param);
 
-fprintf('Endgültige Tiefe: z=%5.0fµm\n', zeta*1e6);
+fprintf('Endgültige Tiefe: z=%5.0fµm\n', zeta*param.w0*1e6);
 
 
 

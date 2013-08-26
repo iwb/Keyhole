@@ -8,16 +8,15 @@ z = point(3,:);
 
 r = sqrt(x.^2 + y.^2);
 
-fokus = param.fokus;
-%Rl = param.scaled.Rl;
-Rl = param.Rl;
-w0 = param.w0;
-waveLength = param.waveLength; %waveLength = param.scaled.waveLength;
+fokus = param.scaled.fokus;
+Rl = param.scaled.Rl;
+%w0 = param.w0;
+waveLength = param.scaled.waveLength;
 
 sumz = z + fokus;
 Jz = 1 + (sumz.^2 ./ Rl.^2);
 
-intensity = 1 ./ Jz .* exp(-2 * r.^2 ./ (w0^2 * Jz)); %intensity = 1 ./ Jz .* exp(-2 * r.^2 ./ Jz);
+intensity = 1 ./ Jz .* exp(-2 * r.^2 ./ Jz);
 
 % Poyntingvektor - Komponenten
 %Eigene Berechnung

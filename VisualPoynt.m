@@ -9,7 +9,7 @@ Xpoynt = reshape(x, [1, 40*40]);
 Ypoynt = zeros(1,40*40);
 Zpoynt = reshape(z, [1, 40*40]);
 
-[pvecNormiert, intensity] = calcPoynting([Xpoynt; Ypoynt; Zpoynt], param);
+[pvecNormiert, intensity] = calcPoynting([Xpoynt; Ypoynt; Zpoynt] ./ param.w0, param);
 
 figure;
 quiver(Xpoynt, Zpoynt, pvecNormiert(1,:), pvecNormiert(3,:), '*')

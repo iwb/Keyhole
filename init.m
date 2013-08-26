@@ -47,8 +47,10 @@ param.scaled.Pe = param.w0/param.kappa * param.v;
 param.scaled.gamma = param.w0 * param.I0 / (param.lambda * (param.Tv - param.T0));
 % Entdim. Schmelzenthlapie
 param.scaled.hm = param.Hm / (param.cp*(param.Tv - param.T0));
-% Skallierte Wellenlänge des Lasers
+% Skalierte Wellenlänge des Lasers
 param.scaled.waveLength = 1064e-9 / param.w0;
+% Skalierter Fokus
+param.scaled.fokus = 0e-6 / param.w0;
 
 %% Parameter ausgeben
 fprintf('Vorschub: %0.1f m/s, Leistung: %0.0f W\n', param.v, param.P);

@@ -13,8 +13,8 @@ function vhp = vhp_dgl(versatz, param)
     dt = t(2) - t(1);
 
     %% Intensitätsvektor berechnen
-    xVec = (param.xOffset - t*param.v); %./ param.w0; % Normierung mit w0
-    yVec = repmat(versatz, 1, steps_t); %./ param.w0; % Normierung mit w0
+    xVec = (param.xOffset - t*param.v) ./ param.w0; % Normierung mit w0
+    yVec = repmat(versatz, 1, steps_t) ./ param.w0; % Normierung mit w0
     zVec = zeros(1, steps_t);
     points = [xVec; yVec; zVec];
 
