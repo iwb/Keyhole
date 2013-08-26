@@ -108,6 +108,16 @@ while (currentA > -2)
         plot(xx, yy);
         refline(0,0);
         drawnow;
+        
+        
+        xx = linspace(-alpha0, 3*alpha0, 100);
+        for ii=1:100
+            yy(ii)=func2(xx(ii));
+        end
+        plot(xx, yy);
+        refline(0,0);
+        drawnow;
+        
     end
     
     if (zindex > 60 && currentAlpha >  arguments.prevRadius)
