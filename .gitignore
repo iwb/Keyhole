@@ -37,3 +37,8 @@ Thumbs.db
 # MATLAB specific files #
 #########################
 *.asv
+
+# Pictures #
+############
+*.png
+*.jpg
