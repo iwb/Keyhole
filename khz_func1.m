@@ -22,10 +22,10 @@ function [ y ] = khz_func1( A, arguments, param, plotdata )
     y = qa0/(param.lambda * deltaT) - param.v/param.kappa - (param.Hm * param.v)/(param.cp * deltaT * param.kappa);
     
     if ~isempty(plotdata)
-        plotdata.HeatFlow.add(qa0);
-        plotdata.Intensity.add(intensity);
-        plotdata.Angle.add(acos(dot(-n1, poyntVec)));
-        plotdata.Fresnel.add(Az);
+        plotdata.HeatFlow.Add(qa0);
+        plotdata.Intensity.Add(intensity);
+        plotdata.Angle.Add(acos(dot(-n1, poyntVec)));
+        plotdata.Fresnel.Add(Az);
     end
 end
 

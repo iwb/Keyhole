@@ -2,12 +2,12 @@ function plotKeyhole( plotdata, param )
 %PLOTKEYHOLE Summary of this function goes here
 %   Detailed explanation goes here
         
-        Apex = cell2mat(plotdata.Apex.toArray.cell);
-        Radius = cell2mat(plotdata.Radius.toArray.cell);
-        Angle =  cell2mat(plotdata.Angle.toArray.cell);
-        Intensity = cell2mat(plotdata.Intensity.toArray.cell);
-        HeatFlow = cell2mat(plotdata.HeatFlow.toArray.cell);
-        Fresnel = cell2mat(plotdata.Fresnel.toArray.cell);
+        Apex = plotdata.Apex.ToArray;
+        Radius = plotdata.Radius.ToArray;
+        Angle =  plotdata.Angle.ToArray;
+        Intensity = plotdata.Intensity.ToArray;
+        %HeatFlow = plotdata.HeatFlow.ToArray;
+        Fresnel = plotdata.Fresnel.ToArray;
         
         
         subplot(1, 3, 1);
