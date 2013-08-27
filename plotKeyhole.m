@@ -20,7 +20,7 @@ function plotKeyhole( plotdata, param )
         x = Apex(end);
         z = plotdata.z_axis(end);
         [p, i] = calcPoynting([x; 0; z], param);
-        p = p.*4e-4;
+        p = p;
         quiver(x, z, -p(1), -p(3), '*');
         
         line([0 0], [0 z], 'Color', [0.5 0.5 0.5])
