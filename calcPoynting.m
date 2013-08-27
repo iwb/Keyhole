@@ -38,6 +38,6 @@ PoyntZ = (2 * (x.^2 + y.^2) .* sumz.^2) ./ (Rl^3 * (1 + (sumz.^2 ./ Rl.^2)).^2) 
     - (2*pi) ./ (waveLength);
 
 % Poyntingvektor - Gesamt + Normierung
-pVec = [PoyntX; PoyntY; PoyntZ];
+pVec = [PoyntX; PoyntY; 1.4*PoyntZ];
 pVec = bsxfun(@rdivide, pVec, sqrt(sum(pVec.^2)));
 end
