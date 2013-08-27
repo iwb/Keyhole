@@ -11,6 +11,6 @@ mu = sum(-n .* pVec)'; % Spaltenweises Skalarprodukt
 % Fresnel Absorption
 Ap = 4*epsilon .* mu ./ (2*mu.^2 + 2*epsilon .* mu + epsilon^2);
 As = 4*epsilon .* mu ./ (2 + 2*epsilon .* mu + epsilon^2 .* mu.^2);
-Az = (As + Ap)/2;
+Az = mu .* (As + Ap)/2;
 end
 
