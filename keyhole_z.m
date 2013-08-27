@@ -19,7 +19,7 @@ alpha0 = ((vhp1 - vhp2)^2 + versatz^2) / (2 * (vhp1 - vhp2)) / param.w0;
 %% Skalierung und Diskretisierung
 
 % Diskretisierung der z-Achse
-dz = -5e-6;
+dz = -1e-6;
 d_zeta = dz / param.w0;
 
 Apex = List();
@@ -80,12 +80,12 @@ while (currentA > -2)
     
     % Berechnung des Radius
     func2 = @(alpha) khz_func2(alpha, currentA, arguments, param, []);
-    alpha_interval(1) = 0; % Minimalwert
-    alpha_interval(2) = 3*alpha0; % Maximalwert
-    currentAlpha = fzero(func2, alpha_interval);
+    alpha_interval(1) = 0.7*currentAlpha; % Minimalwert
+    alpha_interval(2) = 2*currentAlpha; % Maximalwert
+    currentAlpha = fzero(func2, currentAlpha);
     
     % Abbruchkriterium
-    if(isnan(currentAlpha))
+    if(isnan(currentAlpha) || currentAlpha < 1e-6)
         fprintf('Abbruch wegen Radius=Nan. Endgültige Tiefe: %3.0f\n', zeta);
         break;
     end
@@ -99,25 +99,26 @@ while (currentA > -2)
     Radius.Add(currentAlpha);
     
     if (0)
-        xx = linspace(-A0, arguments.prevApex, 100);
-        for ii=1:100
-            yy(ii)=func1(xx(ii));
-        end
-        plot(xx, yy);
-        xlim([-1 1]*A0);
-        ylim([-1 8])
-        refline(0,0);
-        drawnow;
-        
-%         
-%         xx = linspace(-2*alpha0, 3*alpha0, 100);
+%         xx = linspace(-A0, arguments.prevApex, 100);
 %         for ii=1:100
-%             yy(ii)=func2(xx(ii));
+%             yy(ii)=func1(xx(ii));
 %         end
 %         plot(xx, yy);
+%         xlim([-1 1]*A0);
+%         ylim([-1 8])
 %         refline(0,0);
 %         drawnow;
         
+%         
+        xx = linspace(0, 2*alpha0, 100);
+        for ii=1:100
+            yy(ii)=func2(xx(ii));
+        end
+        plot(xx, yy);
+        refline(0,0);
+        ylim([-.2 .2]);
+        drawnow;
+        xlim([0 2*alpha0]);
     end
     
     if (zindex > 60 && currentAlpha >  arguments.prevRadius)
