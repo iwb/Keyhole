@@ -17,10 +17,10 @@ param.epsilon=0.25;
 
 param.Hm = 2.75e5; % [J/kg]
 
-param.w0 = 25e-6; % 25µm Strahlradius [m]
-param.P = 100; % [W]
+param.w0 = 13.186e-6; % 25µm Strahlradius [m]
+param.P = 200; % [W]
 param.I0 = param.P * 2/(pi*param.w0^2); % [W/m2]
-param.v = 13.5/60; % [m/s]
+param.v = 50e-3; % [m/s]
 
 param.waveLength = 1064e-9; % Wellenlänge des Lasers [m]
 
@@ -33,7 +33,7 @@ param.T0 = 300; % [K] Umgebungstemperatur
 
 param.fokus = 0e-6; % Fokusabstand zur Bauteiloberfläche [m]
 
-param.Rl = 0.7e-3; % Rayleighlänge [m]
+param.Rl = 171e-6; % Rayleighlänge [m]
 %param.Rl = pi * param.w0^2 / param.waveLength; % Ideale Rayleighlänge [m]
 
 % Skallierte Größen
