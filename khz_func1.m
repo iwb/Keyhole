@@ -12,7 +12,7 @@ function [ y ] = khz_func1( A, arguments, param, plotdata )
     % Berechnung des Poyntingvektors
     %PP1 = mean([P1, P2], 2);
     
-    [poyntVec, intensity] = calcPoynting(mean([P1 P2], 2), param);
+    [poyntVec, intensity] = calcPoynting(P2, param);
     
     if(dot(-n1, poyntVec) < 0)
        y = -1;
