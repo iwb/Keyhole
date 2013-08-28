@@ -8,7 +8,7 @@ y = linspace(-10, 10, num);
 dx = x(2) - x(1);
 dy = y(2) - x(1);
 
-z = -50;
+z = -0;
 
 [mesh_x, mesh_y] = meshgrid(x, y);
 

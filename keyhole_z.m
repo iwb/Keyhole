@@ -59,7 +59,7 @@ while (currentA > -2)
     zindex = zindex + 1;
     prevZeta = zeta;
     zeta = zeta + d_zeta;
-    
+       
     %% Nullstellensuche mit MATLAB-Verfahren
     % Variablen für Nullstellensuche
     arguments = struct();
@@ -99,15 +99,15 @@ while (currentA > -2)
     Radius.Add(currentAlpha);
     
     if (0)
-%         xx = linspace(-A0, arguments.prevApex, 100);
-%         for ii=1:100
-%             yy(ii)=func1(xx(ii));
-%         end
-%         plot(xx, yy);
-%         xlim([-1 1]*A0);
-%         ylim([-1 8])
-%         refline(0,0);
-%         drawnow;
+        xx = linspace(-A0, arguments.prevApex, 100);
+        for ii=1:100
+            yy(ii)=func1(xx(ii));
+        end
+        plot(xx, yy);
+        xlim([-1 1]*A0);
+        ylim([-1 8])
+        refline(0,0);
+        drawnow;
         
 %         
         xx = linspace(0, 2*alpha0, 100);
