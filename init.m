@@ -39,8 +39,8 @@ param.Rl = 171e-6; % Rayleighlänge [m]
 % Skallierte Größen
 param.scaled = struct();
 % Rayleighlänge
-param.scaled.Rl = pi * param.w0 / param.waveLength; % [-]
-%param.scaled.Rl = param.Rl / param.w0; % [-]
+%param.scaled.Rl = pi * param.w0 / param.waveLength; % [-]
+param.scaled.Rl = param.Rl / param.w0; % [-]
 % Skalierter Vorschub
 param.scaled.Pe = param.w0/param.kappa * param.v;
 % Skalierte Maximalintensität

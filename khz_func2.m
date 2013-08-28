@@ -13,14 +13,15 @@ function [ y ] = khz_func2( alpha, A, arguments, param, plotdata )
     P1 = [arguments.prevApex; 0; arguments.prevZeta];
     P2 = [A; 0; arguments.zeta];
     P3 = [tmp_x(1); tmp_y(1); arguments.prevZeta];
-    %P4 = [tmp_x(2); tmp_y(2); arguments.zeta];
+    P4 = [tmp_x(2); tmp_y(2); arguments.zeta];
     
     d1 = P1 - P2;
     n1 = [-d1(3); 0; d1(1)]; % [x; y; z]
     n1 = n1 ./ norm(n1);
     
     d2 = P3 - P2;
-    n2 = cross(d1, d2);
+    d3 = P4 - P2;
+    n2 = cross(d2, d3);
     n2 = n2 ./ norm(n2);
     
     % Berechnung des Poyntingvektors
@@ -29,7 +30,7 @@ function [ y ] = khz_func2( alpha, A, arguments, param, plotdata )
     tmp_x = Avec - AlphaVec .* (1-cos(winkel/2));
     tmp_y = AlphaVec .* sin(winkel/2);
     %ds = mean(winkel/2 * AlphaVec);
-    ds = winkel/2;
+    ds = winkel;
     
     %PP2 = [mean(tmp_x); mean(tmp_y); mean([arguments.prevZeta, arguments.zeta])];
     PP2 = [tmp_x(2); tmp_y(2); arguments.zeta];
