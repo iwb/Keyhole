@@ -6,7 +6,7 @@ function [ y ] = khz_func2( alpha, A, arguments, param, plotdata )
     Avec = [arguments.prevApex; A];
     AlphaVec = [arguments.prevRadius; alpha];
     
-    winkel = 1*pi/180;
+    winkel = 25*pi/180;
     tmp_x = Avec - AlphaVec .* (1-cos(winkel));
     tmp_y = AlphaVec .* sin(winkel);
     
@@ -14,6 +14,8 @@ function [ y ] = khz_func2( alpha, A, arguments, param, plotdata )
     P2 = [A; 0; arguments.zeta];
     P3 = [tmp_x(1); tmp_y(1); arguments.prevZeta];
     P4 = [tmp_x(2); tmp_y(2); arguments.zeta];
+    % PMat = [P1, P2, P3, P4];
+    %  scatter3(PMat(1, :), PMat(2,:), PMat(3, :), [], 1:4, 'fill');
     
     d1 = P1 - P2;
     n1 = [-d1(3); 0; d1(1)]; % [x; y; z]

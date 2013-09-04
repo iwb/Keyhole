@@ -54,11 +54,15 @@ plotdata.HeatFlow.Add(NaN);
 plotdata.Fresnel.Add(NaN);
 
 %% Schleife über die Tiefe
-while (currentA > -2)
+while (currentA > -20)
     
     zindex = zindex + 1;
     prevZeta = zeta;
     zeta = zeta + d_zeta;
+    
+    if (zindex == 85)
+       disp zindex; 
+    end
        
     %% Nullstellensuche mit MATLAB-Verfahren
     % Variablen für Nullstellensuche
@@ -110,8 +114,8 @@ while (currentA > -2)
         drawnow;
         
 %         
-        xx = linspace(0, 2*alpha0, 100);
-        for ii=1:100
+        xx = linspace(0, 2*alpha0, 1000);
+        for ii=1:1000
             yy(ii)=func2(xx(ii));
         end
         plot(xx, yy);
@@ -136,6 +140,8 @@ while (currentA > -2)
 end
 
 plotKeyhole(plotdata, param);
+figure;
+plot(Radius.ToArray());
 
 fprintf('Endgültige Tiefe: z=%5.0fµm\n', zeta*param.w0*1e6);
 
