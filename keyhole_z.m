@@ -6,11 +6,8 @@ clc
 
 %% VHP berechnen
 versatz = 0.5 * param.w0;
-
 vhp1 = vhp_dgl(0, param);
 vhp2 = vhp_dgl(versatz, param);
-
-
 %% Startwerte
 A0 = vhp1 / param.w0; % VHP an der Blechoberfläche
 % Radius der Schmelzfront an der Oberfläche
@@ -19,7 +16,7 @@ alpha0 = ((vhp1 - vhp2)^2 + versatz^2) / (2 * (vhp1 - vhp2)) / param.w0;
 %% Skalierung und Diskretisierung
 
 % Diskretisierung der z-Achse
-dz = -3e-6;
+dz = -2e-6;
 d_zeta = dz / param.w0;
 
 Apex = List();
@@ -54,16 +51,12 @@ plotdata.HeatFlow.Add(NaN);
 plotdata.Fresnel.Add(NaN);
 
 %% Schleife über die Tiefe
-while (currentA > -20)
+while (true)
     
     zindex = zindex + 1;
     prevZeta = zeta;
     zeta = zeta + d_zeta;
     
-    if (zindex == 85)
-       disp zindex; 
-    end
-       
     %% Nullstellensuche mit MATLAB-Verfahren
     % Variablen für Nullstellensuche
     arguments = struct();
@@ -78,7 +71,11 @@ while (currentA > -20)
     
     % Abbruchkriterium
     if(isnan(currentA))
-        fprintf('Abbruch wegen Apex=Nan. Endgültige Tiefe: %3.0f\n', zeta);
+        fprintf('Abbruch weil Apex = Nan. Endgültige Tiefe: %3.0f\n', zeta);
+        break;
+    end
+    if(currentA < -2)
+        fprintf('Abbruch, weil Apex < -2. Endgültige Tiefe: %3.0f\n', zeta);
         break;
     end
     
@@ -89,10 +86,19 @@ while (currentA > -20)
     currentAlpha = fzero(func2, currentAlpha);
     
     % Abbruchkriterium
-    if(isnan(currentAlpha) || currentAlpha < 1e-6)
-        fprintf('Abbruch wegen Radius=Nan. Endgültige Tiefe: %3.0f\n', zeta);
+    if(isnan(currentAlpha))
+        fprintf('Abbruch weil Radius=Nan. Endgültige Tiefe: %3.0f\n', zeta);
         break;
     end
+    if (currentAlpha < 2e-2)
+        fprintf('Abbruch weil Radius < 0.02. Endgültige Tiefe: %3.0f\n', zeta);
+        break;
+    end
+    if (zindex > 3 && (currentA-2*currentAlpha < arguments.prevApex-2*arguments.prevRadius))
+        fprintf('Abbruch weil Rückwand nach links geht. Endgültige Tiefe: %3.0f\n', zeta);
+        break;
+    end
+    
     % Plotdata befüllen lassen
     khz_func1(currentA, arguments, param, plotdata);
     % Plotdata befüllen lassen
@@ -113,7 +119,7 @@ while (currentA > -20)
         refline(0,0);
         drawnow;
         
-%         
+        %
         xx = linspace(0, 2*alpha0, 1000);
         for ii=1:1000
             yy(ii)=func2(xx(ii));
@@ -126,10 +132,10 @@ while (currentA > -20)
     end
     
     if (zindex > 60 && currentAlpha >  arguments.prevRadius)
-       disp ''; 
+        disp '';
     end
     
-    % Plot    
+    % Plot
     plotdata.z_axis = horzcat(plotdata.z_axis, zeta);
     if mod(zindex, 10) == 0
         
