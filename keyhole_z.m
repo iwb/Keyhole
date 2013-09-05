@@ -54,7 +54,7 @@ plotdata.HeatFlow.Add(NaN);
 plotdata.Fresnel.Add(NaN);
 
 %% Schleife über die Tiefe
-while (currentA > -20)
+while (currentA > -2)
     
     zindex = zindex + 1;
     prevZeta = zeta;
@@ -89,7 +89,7 @@ while (currentA > -20)
     currentAlpha = fzero(func2, currentAlpha);
     
     % Abbruchkriterium
-    if(isnan(currentAlpha) || currentAlpha < 1e-6)
+    if(isnan(currentAlpha) || currentAlpha < 2e-2)
         fprintf('Abbruch wegen Radius=Nan. Endgültige Tiefe: %3.0f\n', zeta);
         break;
     end
