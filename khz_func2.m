@@ -6,7 +6,7 @@ function [ y ] = khz_func2( alpha, A, arguments, param, plotdata )
     Avec = [arguments.prevApex; A];
     AlphaVec = [arguments.prevRadius; alpha];
     
-    winkel = 1*pi/180;
+    winkel = .5*pi/180;
     tmp_x = Avec - AlphaVec .* (1-cos(winkel));
     tmp_y = AlphaVec .* sin(winkel);
     
@@ -15,7 +15,7 @@ function [ y ] = khz_func2( alpha, A, arguments, param, plotdata )
     P3 = [tmp_x(1); tmp_y(1); arguments.prevZeta];
     P4 = [tmp_x(2); tmp_y(2); arguments.zeta];
     
-    winkel2 = 1.05 * winkel;
+    winkel2 = 2 * winkel;
     tmp_x = Avec - AlphaVec .* (1-cos(winkel2));
     tmp_y = AlphaVec .* sin(winkel2);    
     P4_dash = [tmp_x(2); tmp_y(2); arguments.zeta];
@@ -39,18 +39,12 @@ function [ y ] = khz_func2( alpha, A, arguments, param, plotdata )
     n1 = [-d1(3); 0; d1(1)]; % [x; y; z]
     n1 = n1 ./ norm(n1);
     
-    d2 = P4 - P4_dash;
+    d2 = P2 - P4_dash;
     d3 = P4 - P3;
     n2 = cross(d3, d2);
     n2 = n2 ./ norm(n2);
     
     [poyntVec, intensity] = calcPoynting([P2, P4], param);
-    
-    
-    
-    if(dot(-n2, poyntVec(:,2)) < 0)
-        disp error;
-    end
     
     % Berechnung von qa0 und qa2
     Az = calcFresnel(poyntVec, [n1, n2], param);
