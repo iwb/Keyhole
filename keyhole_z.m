@@ -19,7 +19,7 @@ alpha0 = ((vhp1 - vhp2)^2 + versatz^2) / (2 * (vhp1 - vhp2)) / param.w0;
 %% Skalierung und Diskretisierung
 
 % Diskretisierung der z-Achse
-dz = -1e-6;
+dz = -3e-6;
 d_zeta = dz / param.w0;
 
 Apex = List();
