@@ -94,10 +94,10 @@ while (true)
         fprintf('Abbruch weil Radius < 0.02. Endgültige Tiefe: %3.0f\n', zeta);
         break;
     end
-    if (zindex > 3 && (currentA-2*currentAlpha < arguments.prevApex-2*arguments.prevRadius))
-        fprintf('Abbruch weil Rückwand nach links geht. Endgültige Tiefe: %3.0f\n', zeta);
-        break;
-    end
+%     if (zindex > 10 && (currentA-2*currentAlpha < arguments.prevApex-2*arguments.prevRadius))
+%         fprintf('Abbruch weil Rückwand nach links geht. Endgültige Tiefe: %3.0f\n', zeta);
+%         break;
+%     end
     
     % Plotdata befüllen lassen
     khz_func1(currentA, arguments, param, plotdata);
@@ -120,13 +120,14 @@ while (true)
         drawnow;
         
         %
-        xx = linspace(0, 2*alpha0, 1000);
-        for ii=1:1000
+        xx = linspace(0, 20*alpha0, 400);
+        yy = zeros(1, 400);
+        for ii=1:400
             yy(ii)=func2(xx(ii));
         end
         plot(xx, yy);
         refline(0,0);
-        ylim([-.2 .2]);
+        ylim([-1 1]);
         drawnow;
         xlim([0 2*alpha0]);
     end

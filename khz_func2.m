@@ -13,31 +13,44 @@ function [ y ] = khz_func2( alpha, A, arguments, param, plotdata )
     P1 = [arguments.prevApex; 0; arguments.prevZeta];
     P2 = [A; 0; arguments.zeta];
     P3 = [tmp_x(1); tmp_y(1); arguments.prevZeta];
-    P3_dash = [tmp_x(1); -tmp_y(1); arguments.prevZeta];
     P4 = [tmp_x(2); tmp_y(2); arguments.zeta];
-    % PMat = [P1, P2, P3, P3_dash, P4];
-    % scatter3(PMat(1, :), PMat(2,:), PMat(3, :), [], 1:5, 'fill');
+    
+    winkel2 = 1.05 * winkel;
+    tmp_x = Avec - AlphaVec .* (1-cos(winkel2));
+    tmp_y = AlphaVec .* sin(winkel2);    
+    P4_dash = [tmp_x(2); tmp_y(2); arguments.zeta];
+    
+    %{
+    figure;
+    PMat = [P1, P2, P3, P3_dash, P4];
+    scatter3(PMat(1, :), PMat(2,:), PMat(3, :), [], 1:5, 'fill');
+    xlim([-1 1]);
+    ylim([-1 1]);
+    zlim([-1 1]);
+    daspect([1 1 1]);
+    hold all;    line([0 P1(1)], [0, P1(2)], [0 P1(3)]);
+    hold all;    line([0 P2(1)], [0, P2(2)], [0 P2(3)]);
+    hold all;    line([0 P3(1)], [0, P3(2)], [0 P3(3)]);
+    hold all;    line([0 P3_dash(1)], [0, P3_dash(2)], [0 P3_dash(3)]);
+    hold all;    line([0 P4(1)], [0, P4(2)], [0 P4(3)]);
+    %}
     
     d1 = P1 - P2;
     n1 = [-d1(3); 0; d1(1)]; % [x; y; z]
     n1 = n1 ./ norm(n1);
     
-    d2 = P3 - P3_dash;
-    d3 = P3 - P4;
+    d2 = P4 - P4_dash;
+    d3 = P4 - P3;
     n2 = cross(d3, d2);
     n2 = n2 ./ norm(n2);
     
-    % Berechnung des Poyntingvektors
-    %PP1 = mean([P1, P2], 2);
-    
-%     tmp_x = Avec - AlphaVec .* (1-cos(winkel/2));
-%     tmp_y = AlphaVec .* sin(winkel/2);
-    %ds = mean(winkel/2 * AlphaVec);
-    
-    %PP2 = [mean(tmp_x); mean(tmp_y); mean([arguments.prevZeta, arguments.zeta])];
-    %PP2 = [tmp_x(2); tmp_y(2); arguments.zeta];
-    
     [poyntVec, intensity] = calcPoynting([P2, P4], param);
+    
+    
+    
+    if(dot(-n2, poyntVec(:,2)) < 0)
+        disp error;
+    end
     
     % Berechnung von qa0 und qa2
     Az = calcFresnel(poyntVec, [n1, n2], param);

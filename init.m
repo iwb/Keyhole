@@ -33,8 +33,8 @@ param.T0 = 300; % [K] Umgebungstemperatur
 
 param.fokus = 0e-6; % Fokusabstand zur Bauteiloberfläche [m]
 
-%param.Rl = pi * param.w0^2 / param.waveLength; % Ideale Rayleighlänge [m]
-param.Rl = 171e-6; % Rayleighlänge [m]
+param.Rl = pi * param.w0^2 / param.waveLength; % Ideale Rayleighlänge [m]
+%param.Rl = 171e-6; % Rayleighlänge [m]
 
 % Skallierte Größen
 param.scaled = struct();
