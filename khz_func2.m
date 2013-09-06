@@ -6,7 +6,7 @@ function [ y ] = khz_func2( alpha, A, arguments, param, plotdata )
     Avec = [arguments.prevApex; A];
     AlphaVec = [arguments.prevRadius; alpha];
     
-    winkel = .5*pi/180;
+    winkel = 1*pi/180;
     tmp_x = Avec - AlphaVec .* (1-cos(winkel));
     tmp_y = AlphaVec .* sin(winkel);
     
@@ -14,11 +14,6 @@ function [ y ] = khz_func2( alpha, A, arguments, param, plotdata )
     P2 = [A; 0; arguments.zeta];
     P3 = [tmp_x(1); tmp_y(1); arguments.prevZeta];
     P4 = [tmp_x(2); tmp_y(2); arguments.zeta];
-    
-    winkel2 = 2 * winkel;
-    tmp_x = Avec - AlphaVec .* (1-cos(winkel2));
-    tmp_y = AlphaVec .* sin(winkel2);    
-    P4_dash = [tmp_x(2); tmp_y(2); arguments.zeta];
     
     %{
     figure;
@@ -39,9 +34,13 @@ function [ y ] = khz_func2( alpha, A, arguments, param, plotdata )
     n1 = [-d1(3); 0; d1(1)]; % [x; y; z]
     n1 = n1 ./ norm(n1);
     
-    d2 = P2 - P4_dash;
-    d3 = P4 - P3;
-    n2 = cross(d3, d2);
+	    
+    tmp_x = A - alpha .* (1-cos(winkel + pi/2));
+    tmp_y = alpha .* sin(winkel + pi/2);    
+    P4_tangent = [tmp_x; tmp_y; 0];
+	
+    d3 = P3 - P4;
+    n2 = cross(d3, P4_tangent);
     n2 = n2 ./ norm(n2);
     
     [poyntVec, intensity] = calcPoynting([P2, P4], param);

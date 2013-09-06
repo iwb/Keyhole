@@ -16,7 +16,7 @@ alpha0 = ((vhp1 - vhp2)^2 + versatz^2) / (2 * (vhp1 - vhp2)) / param.w0;
 %% Skalierung und Diskretisierung
 
 % Diskretisierung der z-Achse
-dz = -3e-6;
+dz = -1e-6;
 d_zeta = dz / param.w0;
 
 Apex = List();
@@ -81,23 +81,23 @@ while (true)
     
     % Berechnung des Radius
     func2 = @(alpha) khz_func2(alpha, currentA, arguments, param, []);
-    alpha_interval(1) = 0.7*currentAlpha; % Minimalwert
-    alpha_interval(2) = 2*currentAlpha; % Maximalwert
-    currentAlpha = fzero(func2, currentAlpha);
+    alpha_interval(1) = currentA; % Minimalwert
+    alpha_interval(2) = currentAlpha; % Maximalwert
+    currentAlpha = fzero(func2, alpha_interval);
     
     % Abbruchkriterium
     if(isnan(currentAlpha))
         fprintf('Abbruch weil Radius=Nan. Endgültige Tiefe: %3.0f\n', zeta);
         break;
     end
-    if (currentAlpha < 2e-2)
-        fprintf('Abbruch weil Radius < 0.02. Endgültige Tiefe: %3.0f\n', zeta);
+    if (currentAlpha < 1e-3)
+        fprintf('Abbruch weil Keyhole geschlossen. Endgültige Tiefe: %3.0f\n', zeta);
         break;
     end
-%     if (zindex > 10 && (currentA-2*currentAlpha < arguments.prevApex-2*arguments.prevRadius))
-%         fprintf('Abbruch weil Rückwand nach links geht. Endgültige Tiefe: %3.0f\n', zeta);
-%         break;
-%     end
+    if (zindex > 10 && currentAlpha > arguments.prevRadius)
+        fprintf('Abbruch weil Radius steigt. Endgültige Tiefe: %3.0f\n', zeta);
+        %break;
+    end
     
     % Plotdata befüllen lassen
     khz_func1(currentA, arguments, param, plotdata);
@@ -108,6 +108,16 @@ while (true)
     Apex.Add(currentA);
     Radius.Add(currentAlpha);
     
+    % Plot
+    plotdata.z_axis = horzcat(plotdata.z_axis, zeta);
+    if mod(zindex, 10) == 0
+        
+        fprintf('Aktuelle Tiefe z=%5.2fµm, r=%8.3fµm\n', zeta*param.w0*1e6, currentAlpha*param.w0*1e6);
+        
+        plotKeyhole(plotdata, param);
+    end
+	
+	
     if (0)
         xx = linspace(-A0, arguments.prevApex, 100);
         for ii=1:100
@@ -118,32 +128,23 @@ while (true)
         ylim([-1 8])
         refline(0,0);
         drawnow;
-        
+	end
+	if(0)
         %
-        xx = linspace(0, 20*alpha0, 400);
-        yy = zeros(1, 400);
-        for ii=1:400
+		%figure;
+		plotKeyhole(plotdata, param);
+		
+        xx = linspace(0, 2*alpha0, 1000);
+        yy = zeros(1, 1000);
+        for ii=1:1000
             yy(ii)=func2(xx(ii));
         end
         plot(xx, yy);
         refline(0,0);
-        ylim([-1 1]);
+        ylim([-5 5]);
         drawnow;
-        xlim([0 2*alpha0]);
-    end
-    
-    if (zindex > 60 && currentAlpha >  arguments.prevRadius)
-        disp '';
-    end
-    
-    % Plot
-    plotdata.z_axis = horzcat(plotdata.z_axis, zeta);
-    if mod(zindex, 10) == 0
-        
-        fprintf('Aktuelle Tiefe z=%5.2fµm, r=%8.3fµm\n', zeta*param.w0*1e6, currentAlpha*param.w0*1e6);
-        
-        plotKeyhole(plotdata, param);
-    end
+        xlim([0 2] .* alpha0);
+	end
 end
 
 plotKeyhole(plotdata, param);
