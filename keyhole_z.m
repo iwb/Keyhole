@@ -110,7 +110,7 @@ while (true)
     
     % Plot
     plotdata.z_axis = horzcat(plotdata.z_axis, zeta);
-    if mod(zindex, 10) == 0
+    if mod(zindex, 20) == 0
         
         fprintf('Aktuelle Tiefe z=%5.2fµm, r=%8.3fµm\n', zeta*param.w0*1e6, currentAlpha*param.w0*1e6);
         
