@@ -38,20 +38,21 @@ if ~isempty(plotdata)
 	disp '';
 end
 
-Algo = 2;
+Algo = 3;
 switch(Algo)
 	case 1 % Approximation der Tangente durch die Sekante
 		tmp_x = A - alpha .* (1-cos(winkel * 2));
 		tmp_y = alpha .* sin(winkel * 2);
 		P4a = [tmp_x; tmp_y; arguments.zeta];
 		
-		d2 = P4a - P2;
+		d2 = P4a - P2; % aaa = d2./norm(d2)
 		d3 = P3 - P4;
 		n2 = cross(d3, d2);
 		n2 = n2 ./ norm(n2);
 	case 2 % Errechung der Tangete per Trigonometrie
-		tmp_x = A - alpha .* (1-cos(winkel + pi/2));
-		tmp_y = alpha .* sin(winkel + pi/2);
+		tmp_x = -sin(winkel);
+		tmp_y = cos(winkel);
+        
 		P4_tangent = [tmp_x; tmp_y; 0];
 		
 		d3 = P3 - P4;
