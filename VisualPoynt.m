@@ -1,7 +1,7 @@
 run('init.m')
 clc
 diskreteQuiver= 50;
-anzWellen = 10;
+anzWellen = 55;
 diskreteWelle = 1000;
 zTiefe = 1e-3;
 
@@ -34,7 +34,11 @@ quiver(Xpoynt, Zpoynt, pvecNormiert(1,:), pvecNormiert(3,:), '*')
 hold on
 plot(strahl, linspace(0, -zTiefe, diskreteQuiver*2), 'g', 'LineWidth', 1.5)
 plot(-strahl, linspace(0, -zTiefe, diskreteQuiver*2), 'g', 'LineWidth', 1.5)
-if (0)
+plot(strahl./2, linspace(0, -zTiefe, diskreteQuiver*2), 'g', 'LineWidth', 1.5)
+plot(-strahl./2, linspace(0, -zTiefe, diskreteQuiver*2), 'g', 'LineWidth', 1.5)
+plot(strahl.*2, linspace(0, -zTiefe, diskreteQuiver*2), 'g', 'LineWidth', 1.5)
+plot(-strahl.*2, linspace(0, -zTiefe, diskreteQuiver*2), 'g', 'LineWidth', 1.5)
+if (1)
     for i = 2:size(xp, 1)
         plot(-xp(i,:), -yp(i,:), 'r')
     end
