@@ -74,15 +74,15 @@ while (true)
         fprintf('Abbruch weil Apex = Nan. Endgültige Tiefe: %3.0f\n', zeta);
         break;
     end
-    if(currentA < -2)
+    if(currentA < -3)
         fprintf('Abbruch, weil Apex < -2. Endgültige Tiefe: %3.0f\n', zeta);
         break;
     end
     
     % Berechnung des Radius
     func2 = @(alpha) khz_func2(alpha, currentA, arguments, param, []);
-    alpha_interval(1) = currentA; % Minimalwert
-    alpha_interval(2) = currentAlpha; % Maximalwert
+    alpha_interval(1) = 0.5*currentA; % Minimalwert
+    alpha_interval(2) = 1.05 * currentAlpha; % Maximalwert
     currentAlpha = fzero(func2, alpha_interval);
     
     % Abbruchkriterium
@@ -96,7 +96,7 @@ while (true)
     end
     if (zindex > 10 && currentAlpha > arguments.prevRadius)
         fprintf('Abbruch weil Radius steigt. Endgültige Tiefe: %3.0f\n', zeta);
-        %break;
+        break;
     end
     
     % Plotdata befüllen lassen
@@ -112,7 +112,7 @@ while (true)
     plotdata.z_axis = horzcat(plotdata.z_axis, zeta);
     if mod(zindex, 20) == 0
         
-        fprintf('Aktuelle Tiefe z=%5.2fµm, r=%8.3fµm\n', zeta*param.w0*1e6, currentAlpha*param.w0*1e6);
+        fprintf('Aktuelle Tiefe z=%5.2fµm, r=%8.3fµm, A=%8.3fµm\n', zeta*param.w0*1e6, currentAlpha*param.w0*1e6, currentA*param.w0*1e6);
         
         plotKeyhole(plotdata, param);
     end
@@ -141,7 +141,13 @@ while (true)
         end
         plot(xx, yy);
         refline(0,0);
-        ylim([-5 5]);
+        ylimit = [-1 1] .* 1e-3;
+        ylim(ylimit);
+        hold all;
+        
+        line([1 1] .* alpha_interval(1), ylimit);
+        line([1 1] .* alpha_interval(2), ylimit);
+        
         drawnow;
         xlim([0 2] .* alpha0);
 	end

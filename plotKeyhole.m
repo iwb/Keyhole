@@ -28,6 +28,7 @@ function plotKeyhole( plotdata, param )
         ylabel('Tiefe [w_0]');
         xlabel('X-Richtung [w_0]');
         %legend('Scheitel', 'Rückwand', 'Poynting')
+        %daspect([1 1 1]);
         drawnow;
         
         subplot(1, 3, [2 3]);
