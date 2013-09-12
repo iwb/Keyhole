@@ -90,12 +90,16 @@ while (true)
         fprintf('Abbruch weil Radius=Nan. Endgültige Tiefe: %3.0f\n', zeta);
         break;
     end
-    if (currentAlpha < 1e-3)
+    if (currentAlpha < 2e-2)
         fprintf('Abbruch weil Keyhole geschlossen. Endgültige Tiefe: %3.0f\n', zeta);
         break;
     end
     if (zindex > 10 && currentAlpha > arguments.prevRadius)
         fprintf('Abbruch weil Radius steigt. Endgültige Tiefe: %3.0f\n', zeta);
+        break;
+    end
+    if (zindex * dz <= -5e-3)
+        fprintf('Abbruch weil Blechtiefe erreicht\n');
         break;
     end
     
@@ -119,14 +123,17 @@ while (true)
 	
 	
     if (0)
-        xx = linspace(-A0, arguments.prevApex, 100);
-        for ii=1:100
+        xx = linspace(-A0, A0, 1000);
+        yy = zeros(1, 1000);
+        for ii=1:1000
             yy(ii)=func1(xx(ii));
         end
         plot(xx, yy);
+        ylimit = [-1 1] .* 10;
         xlim([-1 1]*A0);
-        ylim([-1 8])
+        ylim(ylimit)
         refline(0,0);
+        line([1 1] .* arguments.prevApex, ylimit);
         drawnow;
 	end
 	if(0)
@@ -141,7 +148,7 @@ while (true)
         end
         plot(xx, yy);
         refline(0,0);
-        ylimit = [-1 1] .* 1e-3;
+        ylimit = [-1 1] .* 1e2;
         ylim(ylimit);
         hold all;
         
@@ -154,8 +161,10 @@ while (true)
 end
 
 plotKeyhole(plotdata, param);
-figure;
-plot(Radius.ToArray());
+%xlim([-1.5 1.5]);
+%ylim([-1e-3/param.w0 0]);
+% figure;
+% plot(Radius.ToArray());
 
 fprintf('Endgültige Tiefe: z=%5.0fµm\n', zeta*param.w0*1e6);
 

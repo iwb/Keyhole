@@ -45,3 +45,19 @@ if (1)
     daspect([1 1 1])
 end
 hold off
+
+
+%{
+
+wz = @(z) sqrt(1 + ((z+param.scaled.fokus).^2 ./ param.scaled.Rl^2));
+wz2 = @(z) 0.5 .* sqrt(1 + ((z+param.scaled.fokus).^2 ./ param.scaled.Rl^2));
+z = -76:0;
+radius = wz(z);
+hold all;
+plot(radius, z);
+plot(-radius, z);
+
+radius = wz2(z);
+plot(radius, z);
+plot(-radius, z);
+%}
