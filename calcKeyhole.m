@@ -33,7 +33,6 @@ Radius(1) = alpha0;
 
 %% Variablen für die Schleife
 zeta = 0;
-prevZeta = 0;
 zindex = 0;
 
 currentA = A0;
@@ -51,11 +50,12 @@ while (true)
 	arguments = struct();
 	arguments.prevZeta = prevZeta;
 	arguments.zeta = zeta;
+	arguments.d_zeta = d_zeta;
 	arguments.prevApex = currentA;
 	arguments.prevRadius = currentAlpha;
 	
 	% Berechnung des neuen Scheitelpunktes
-	func1 = @(A) khz_func1(A, arguments, param, []);
+	func1 = @(A) khz_func1(A, arguments, param);
 	currentA = fzero(func1, currentA);
 	
 	% Abbruchkriterium
@@ -69,7 +69,7 @@ while (true)
 	end
 	
 	% Berechnung des Radius
-	func2 = @(alpha) khz_func2(alpha, currentA, arguments, param, []);
+	func2 = @(alpha) khz_func2(alpha, currentA, arguments, param);
 	alpha_interval(1) = 0.5*currentA; % Minimalwert
 	alpha_interval(2) = 1.05 * currentAlpha; % Maximalwert
 	currentAlpha = fzero(func2, alpha_interval);

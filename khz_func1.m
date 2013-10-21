@@ -1,12 +1,12 @@
-function [ y ] = khz_func1( A, arguments, param, plotdata )
+function [ y ] = khz_func1( A, arguments, param )
 %KHZ_FUNC1 Summary of this function goes here
 %   Detailed explanation goes here
     
     P1 = [arguments.prevApex; 0; arguments.prevZeta];
     P2 = [A; 0; arguments.zeta];
     
-    d1 = P1 - P2;
-    n1 = [-d1(3); 0; d1(1)]; % [x; y; z]
+    d = P1 - P2;
+    n1 = [arguments.d_zeta; 0; d(1)]; % [x; y; z]
     n1 = n1 ./ norm(n1);
     
     % Berechnung des Poyntingvektors
@@ -24,14 +24,5 @@ function [ y ] = khz_func1( A, arguments, param, plotdata )
     qa0 = param.scaled.gamma * intensity * Az;
     
     y = qa0 - (1 + param.scaled.hm) * param.scaled.Pe;
-    
-    if ~isempty(plotdata)
-        mu = dot(-n1, poyntVec);
-        
-        plotdata.HeatFlow.Add(qa0);
-        plotdata.Intensity.Add(intensity);
-        plotdata.Angle.Add(acos(mu));
-        plotdata.Fresnel.Add(Az/mu);
-    end
 end
 
