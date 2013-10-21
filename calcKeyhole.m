@@ -60,11 +60,11 @@ while (true)
 	
 	% Abbruchkriterium
 	if(isnan(currentA))
-		Reason = sprintf('Abbruch weil Apex = Nan. Endgültige Tiefe: %3.0f\n', zeta);
+		Reason = struct('Num', 1, 'Name', sprintf('Abbruch weil Apex = Nan. Endgültige Tiefe: %3.0f\n', zeta));
 		break;
 	end
 	if(currentA < -5)
-		Reason = sprintf('Abbruch, weil Apex < -5. Endgültige Tiefe: %3.0f\n', zeta);
+		Reason = struct('Num', 2, 'Name', sprintf('Abbruch, weil Apex < -5. Endgültige Tiefe: %3.0f\n', zeta));
 		break;
 	end
 	
@@ -76,19 +76,19 @@ while (true)
 	
 	% Abbruchkriterium
 	if(isnan(currentAlpha))
-		Reason = sprintf('Abbruch weil Radius=Nan. Endgültige Tiefe: %3.0f\n', zeta);
+		Reason = struct('Num', 3, 'Name', sprintf('Abbruch weil Radius=Nan. Endgültige Tiefe: %3.0f\n', zeta));
 		break;
 	end
 	if (currentAlpha < 1e-12)
-		Reason = sprintf('Abbruch weil Keyhole geschlossen. Endgültige Tiefe: %3.0f\n', zeta);
+		Reason = struct('Num', 4, 'Name', sprintf('Abbruch weil Keyhole geschlossen. Endgültige Tiefe: %3.0f\n', zeta));
 		break;
 	end
 	if (zindex > 10 && currentAlpha > arguments.prevRadius)
-		Reason = sprintf('Abbruch weil Radius steigt / KH geschlossen. Endgültige Tiefe: %3.0f\n', zeta);
+		Reason = struct('Num', 5, 'Name', sprintf('Abbruch weil Radius steigt / KH geschlossen. Endgültige Tiefe: %3.0f\n', zeta));
 		break;
 	end
 	if (zindex >= max_zindex)
-		Reason = sprintf('Abbruch weil Blechtiefe erreicht.\n');
+		Reason = struct('Num', 6, 'Name', sprintf('Abbruch weil Blechtiefe erreicht.\n'));
 		break;
 	end
 	
@@ -98,7 +98,7 @@ while (true)
 end
 zindex = zindex - 1;
 
-KH_geom(1, :) = [0:zindex] * d_zeta;
+KH_geom(1, :) = (0:zindex) * d_zeta;
 KH_geom(2:3, 1) = [A0; alpha0];
 KH_geom(2, 2:end) = Apex(1:zindex);
 KH_geom(3, 2:end) = Radius(1:zindex);
