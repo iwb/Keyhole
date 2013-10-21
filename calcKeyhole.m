@@ -1,8 +1,10 @@
-%% Errechnet das Keyhole in Z-Richtung
+function [ KH_geom, Reason ] = calcKeyhole()
+%calcKeyhole Berechnet die Geometrie des Keyholes.
+%   Rückgabewert ist eine 3xn Matrix. IN der ersten Spalte ist der
+%   zugehörige z-Wert, in der zweiten der Scheitelpunkt und in der dritten
+%	Spalte der Radius. Der zweite Rückgabewert gibt den Abbruchgrund an.
 
-fprintf('Keyhole Berechnung\n')
 run('init.m')
-clc
 
 %% VHP berechnen
 versatz = 0.5 * param.w0;
@@ -58,11 +60,11 @@ while (true)
 	
 	% Abbruchkriterium
 	if(isnan(currentA))
-		fprintf('Abbruch weil Apex = Nan. Endgültige Tiefe: %3.0f\n', zeta);
+		Reason = sprintf('Abbruch weil Apex = Nan. Endgültige Tiefe: %3.0f\n', zeta);
 		break;
 	end
 	if(currentA < -5)
-		fprintf('Abbruch, weil Apex < -5. Endgültige Tiefe: %3.0f\n', zeta);
+		Reason = sprintf('Abbruch, weil Apex < -5. Endgültige Tiefe: %3.0f\n', zeta);
 		break;
 	end
 	
@@ -74,19 +76,19 @@ while (true)
 	
 	% Abbruchkriterium
 	if(isnan(currentAlpha))
-		fprintf('Abbruch weil Radius=Nan. Endgültige Tiefe: %3.0f\n', zeta);
+		Reason = sprintf('Abbruch weil Radius=Nan. Endgültige Tiefe: %3.0f\n', zeta);
 		break;
 	end
 	if (currentAlpha < 1e-12)
-		fprintf('Abbruch weil Keyhole geschlossen. Endgültige Tiefe: %3.0f\n', zeta);
+		Reason = sprintf('Abbruch weil Keyhole geschlossen. Endgültige Tiefe: %3.0f\n', zeta);
 		break;
 	end
 	if (zindex > 10 && currentAlpha > arguments.prevRadius)
-		fprintf('Abbruch weil Radius steigt / KH geschlossen. Endgültige Tiefe: %3.0f\n', zeta);
+		Reason = sprintf('Abbruch weil Radius steigt / KH geschlossen. Endgültige Tiefe: %3.0f\n', zeta);
 		break;
 	end
 	if (zindex >= max_zindex)
-		fprintf('Abbruch weil Blechtiefe erreicht.\n');
+		Reason = sprintf('Abbruch weil Blechtiefe erreicht.\n');
 		break;
 	end
 	
@@ -94,11 +96,14 @@ while (true)
 	Apex(zindex) = currentA;
 	Radius(zindex) = currentAlpha;
 end
+zindex = zindex - 1;
 
-Apex = Apex(1:zindex-1);
-Radius = Radius(1:zindex-1);
+KH_geom(1, :) = [0:zindex] * d_zeta;
+KH_geom(2:3, 1) = [A0; alpha0];
+KH_geom(2, 2:end) = Apex(1:zindex);
+KH_geom(3, 2:end) = Radius(1:zindex);
 
-fprintf('Endgültige Tiefe: z=%5.0fµm\n', zeta*param.w0*1e6);
+end
 
 
 
