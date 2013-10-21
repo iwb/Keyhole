@@ -75,7 +75,7 @@ while (true)
         break;
     end
     if(currentA < -3)
-        fprintf('Abbruch, weil Apex < -2. Endgültige Tiefe: %3.0f\n', zeta);
+        fprintf('Abbruch, weil Apex < -3. Endgültige Tiefe: %3.0f\n', zeta);
         break;
     end
     
@@ -90,7 +90,7 @@ while (true)
         fprintf('Abbruch weil Radius=Nan. Endgültige Tiefe: %3.0f\n', zeta);
         break;
     end
-    if (currentAlpha < 2e-2)
+    if (currentAlpha < 1e-12)
         fprintf('Abbruch weil Keyhole geschlossen. Endgültige Tiefe: %3.0f\n', zeta);
         break;
     end
