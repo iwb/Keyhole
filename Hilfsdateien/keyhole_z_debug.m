@@ -111,7 +111,60 @@ while (true)
     % Werte übernehmen und sichern
     Apex.Add(currentA);
     Radius.Add(currentAlpha);
+    
+    % Plot
+    plotdata.z_axis = horzcat(plotdata.z_axis, zeta);
+    if mod(zindex, 20) == 0
+        
+        fprintf('Aktuelle Tiefe z=%5.2fµm, r=%8.3fµm, A=%8.3fµm\n', zeta*param.w0*1e6, currentAlpha*param.w0*1e6, currentA*param.w0*1e6);
+        
+        plotKeyhole(plotdata, param);
+    end
+	
+	
+    if (0)
+        xx = linspace(-A0, A0, 1000);
+        yy = zeros(1, 1000);
+        for ii=1:1000
+            yy(ii)=func1(xx(ii));
+        end
+        plot(xx, yy);
+        ylimit = [-1 1] .* 10;
+        xlim([-1 1]*A0);
+        ylim(ylimit)
+        refline(0,0);
+        line([1 1] .* arguments.prevApex, ylimit);
+        drawnow;
+	end
+	if(0)
+        %
+		%figure;
+		plotKeyhole(plotdata, param);
+		
+        xx = linspace(0, 2*alpha0, 1000);
+        yy = zeros(1, 1000);
+        for ii=1:1000
+            yy(ii)=func2(xx(ii));
+        end
+        plot(xx, yy);
+        refline(0,0);
+        ylimit = [-1 1] .* 1e2;
+        ylim(ylimit);
+        hold all;
+        
+        line([1 1] .* alpha_interval(1), ylimit);
+        line([1 1] .* alpha_interval(2), ylimit);
+        
+        drawnow;
+        xlim([0 2] .* alpha0);
+	end
 end
+
+plotKeyhole(plotdata, param);
+%xlim([-1.5 1.5]);
+%ylim([-1e-3/param.w0 0]);
+% figure;
+% plot(Radius.ToArray());
 
 fprintf('Endgültige Tiefe: z=%5.0fµm\n', zeta*param.w0*1e6);
 
