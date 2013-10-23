@@ -99,12 +99,10 @@ end
 zindex = zindex - 1;
 
 KH_geom(1, :) = (0:zindex) * d_zeta;
-KH_geom(2:3, 1) = [A0; alpha0];
-KH_geom(2, 2:end) = Apex(1:zindex);
+KH_geom(2:3, 1) = [A0 - alpha0; alpha0];
+KH_geom(2, 2:end) = Apex(1:zindex) - Radius(1:zindex);
 KH_geom(3, 2:end) = Radius(1:zindex);
 
+KH_geom = KH_geom .* param.w0;
 end
-
-
-
 
