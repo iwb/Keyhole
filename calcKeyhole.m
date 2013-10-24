@@ -1,5 +1,6 @@
-function [ KH_geom, Reason ] = calcKeyhole()
+function [ KH_geom, Reason ] = calcKeyhole(zResolution)
 %calcKeyhole Berechnet die Geometrie des Keyholes.
+%	Parameter ist die Diskretisierung in z-Richtung in µm.
 %   Rückgabewert ist eine 3xn Matrix. IN der ersten Spalte ist der
 %   zugehörige z-Wert, in der zweiten der Scheitelpunkt und in der dritten
 %	Spalte der Radius. Der zweite Rückgabewert gibt den Abbruchgrund an.
@@ -18,7 +19,7 @@ alpha0 = ((vhp1 - vhp2)^2 + versatz^2) / (2 * (vhp1 - vhp2)) / param.w0;
 %% Skalierung und Diskretisierung
 
 % Diskretisierung der z-Achse
-dz = -5e-6;
+dz = -zResolution * 1e-6;
 d_zeta = dz / param.w0;
 
 % Blechdicke
