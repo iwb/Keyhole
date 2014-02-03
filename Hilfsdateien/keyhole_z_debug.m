@@ -1,7 +1,9 @@
 %% Errechnet das Keyhole in Z-Richtung
 
+addpath('../');
+
 fprintf('Keyhole Berechnung\n')
-run('init.m')
+run('../init.m')
 clc
 
 %% VHP berechnen
@@ -62,6 +64,7 @@ while (true)
     arguments = struct();
     arguments.prevZeta = prevZeta;
     arguments.zeta = zeta;
+    arguments.d_zeta = d_zeta;
     arguments.prevApex = currentA;
     arguments.prevRadius = currentAlpha;
     
@@ -120,8 +123,8 @@ while (true)
         
         plotKeyhole(plotdata, param);
     end
-	
-	
+    
+    
     if (0)
         xx = linspace(-A0, A0, 1000);
         yy = zeros(1, 1000);
@@ -135,12 +138,12 @@ while (true)
         refline(0,0);
         line([1 1] .* arguments.prevApex, ylimit);
         drawnow;
-	end
-	if(0)
+    end
+    if(0)
         %
-		%figure;
-		plotKeyhole(plotdata, param);
-		
+        %figure;
+        plotKeyhole(plotdata, param);
+        
         xx = linspace(0, 2*alpha0, 1000);
         yy = zeros(1, 1000);
         for ii=1:1000
@@ -157,7 +160,7 @@ while (true)
         
         drawnow;
         xlim([0 2] .* alpha0);
-	end
+    end
 end
 
 plotKeyhole(plotdata, param);
