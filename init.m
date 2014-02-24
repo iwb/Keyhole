@@ -7,34 +7,34 @@ fprintf('==========================================\n');
 %% Konstanten
 % Dimensionsbehaftete Größen
 param = struct();
-param.kappa = 6.7e-6; % = lambda/(rho*cp) [m2/s]
+param.kappa = 8.8119e-6; % = lambda/(rho*cp) [m2/s]
 param.b1 = 1/10; % [-]
 param.b2 = 3/5; % [-]
-param.lambda = 33.63; % [W/(mK)]
+param.lambda = 30.50; % [W/(mK)]
 
 % Materialparameter für Fresnel Absorption
 param.epsilon=0.25;
 
 param.Hm = 2.75e5;% + 6.3e6; % [J/kg]
 
-param.w0 = 13.186e-6; % 25µm Strahlradius [m]
-param.P = 200; % [W]
+param.w0 = 25e-6; % 25µm Strahlradius [m]
+param.P = 2000; % [W]
 param.I0 = param.P * 2/(pi*param.w0^2); % [W/m2]
-param.v = 0.05; % [m/s]
+param.v = 1.3823; % [m/s]
 
 param.waveLength = 1064e-9; % Wellenlänge des Lasers [m]
 
-param.rho = 7033; % [kg/m^3]
-param.cp = 711.4; % [J / kg K]
+param.rho = 7035; % [kg/m^3]
+param.cp = 492; % [J / kg K]
 
-param.Tm = 1796; % [K] Schmelztemperatur
+param.Tm = 1793; % [K] Schmelztemperatur
 param.Tv = 3133; % [K] Verdampfungstemperatur
 param.T0 = 300; % [K] Umgebungstemperatur
 
 param.fokus = 0e-6; % Fokusabstand zur Bauteiloberfläche [m]
 
 param.Rl = pi * param.w0^2 / param.waveLength; % Ideale Rayleighlänge [m]
-param.Rl = 171e-6; % Rayleighlänge [m]
+%param.Rl = 171e-6; % Rayleighlänge [m]
 
 % Skallierte Größen
 param.scaled = struct();
