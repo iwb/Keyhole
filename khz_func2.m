@@ -1,4 +1,4 @@
-function [ y ] = khz_func2( alpha, A, arguments, param )
+function [ y ] = khz_func2( alpha, A, arguments, param, plotdata )
 %KHZ_FUNC2 Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -15,9 +15,28 @@ P2 = [A; 0; arguments.zeta];
 P3 = [tmp_x(1); tmp_y(1); arguments.prevZeta];
 P4 = [tmp_x(2); tmp_y(2); arguments.zeta];
 
+%{
+    figure;
+    PMat = [P1, P2, P3, P3_dash, P4];
+    scatter3(PMat(1, :), PMat(2,:), PMat(3, :), [], 1:5, 'fill');
+    xlim([-1 1]);
+    ylim([-1 1]);
+    zlim([-1 1]);
+    daspect([1 1 1]);
+    hold all;    line([0 P1(1)], [0, P1(2)], [0 P1(3)]);
+    hold all;    line([0 P2(1)], [0, P2(2)], [0 P2(3)]);
+    hold all;    line([0 P3(1)], [0, P3(2)], [0 P3(3)]);
+    hold all;    line([0 P3_dash(1)], [0, P3_dash(2)], [0 P3_dash(3)]);
+    hold all;    line([0 P4(1)], [0, P4(2)], [0 P4(3)]);
+%}
+
 d1 = P1 - P2;
 n1 = [-d1(3); 0; d1(1)]; % [x; y; z]
 n1 = n1 ./ norm(n1);
+
+if ~isempty(plotdata)
+	disp '';
+end
 
 tmp_x = -sin(winkel);
 tmp_y = cos(winkel);

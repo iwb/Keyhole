@@ -1,4 +1,4 @@
-function [ y ] = khz_func1( A, arguments, param )
+function [ y ] = khz_func1( A, arguments, param, plotdata )
 %KHZ_FUNC1 Summary of this function goes here
 %   Detailed explanation goes here
     
@@ -24,5 +24,15 @@ function [ y ] = khz_func1( A, arguments, param )
     qa0 = param.scaled.gamma * intensity * Az;
     
     y = qa0 - (1 + param.scaled.hm) * param.scaled.Pe;
+    
+    % Plot
+    if ~isempty(plotdata)
+        mu = dot(-n1, poyntVec);
+        
+        plotdata.HeatFlow.Add(qa0);
+        plotdata.Intensity.Add(intensity);
+        plotdata.Angle.Add(acos(mu));
+        plotdata.Fresnel.Add(Az/mu);
+    end
 end
 
