@@ -28,14 +28,22 @@ for i = 1:length(v)
         fprintf('Berechnung %0.0f von %0.0d\n', (i-1)*length(P)+j, length(P)*length(v));
         fprintf('Vorschub: %0.2f m/s, Leistung: %0.0f W\n', param.v, param.P);
         % Keyhole berechnen
-        [KH_geom, Reason] = calcKeyhole(dz, param);
-        KH{i,j}.geom = KH_geom;
-        KH{i,j}.reason = Reason;
-        KH{i,j}.t = min(KH_geom(1,:));
-        KH{i,j}.b = KH_geom(3,1);
+        try
+            [KH_geom, Reason] = calcKeyhole(dz, param);
+            KH{i,j}.geom = KH_geom;
+            KH{i,j}.reason = Reason;
+            KH{i,j}.t = min(KH_geom(1,:));
+            KH{i,j}.b = KH_geom(3,1);
+            fprintf('Tiefe: %0.0f µm, Breite: %0.0f µm\n', min(KH_geom(1,:))*1e6, KH_geom(3,1)*1e6);
+        catch
+            KH{i,j}.geom = nan;
+            KH{i,j}.reason = nan;
+            KH{i,j}.t = nan;
+            KH{i,j}.b = nan;
+            fprintf('Die Berechnung konnte nicht fertig gestellt werden.\n');
+        end
         KH{i,j}.v = v(i);
         KH{i,j}.P = P(i);
-        fprintf('Tiefe: %0.0f µm, Breite: %0.0f µm\n', min(KH_geom(1,:))*1e6, KH_geom(3,1)*1e6);
         fprintf('==========================================\n');
     end
 end
