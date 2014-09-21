@@ -1,7 +1,10 @@
 % Skript zur Durchführung einer Parameterstudie für die Keyholeberechnung
 clear all; close all; clc;
 %% Initialisierung und Festlegung der Bereiche
-addpath 'E:\sw\Keyhole'
+path1 = cd;
+cd ..
+addpath(cd);
+cd(path1);
 fmax = 2000; % [Hz]
 Amax = 1e-3; % [m]
 vsmax = 12/60; % [m/s]
@@ -49,6 +52,6 @@ for i = 1:length(v)
 end
 
 %% Shutdown und Speichern
-clear i j KH_geom Reason fmax Amax vsmax dz vmax param
+clear i j KH_geom Reason fmax Amax vsmax dz vmax param path1
 save('KH_sweep.mat');
 
