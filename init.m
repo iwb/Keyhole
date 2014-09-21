@@ -2,8 +2,6 @@
 %close all;
 %clc;
 
-fprintf('==========================================\n');
-
 %% Konstanten
 % Dimensionsbehaftete Größen
 param = struct();
@@ -51,7 +49,3 @@ param.scaled.waveLength = param.waveLength / param.w0;
 % Skalierter Fokus
 param.scaled.fokus = param.fokus / param.w0;
 
-%% Parameter ausgeben
-fprintf('Vorschub: %0.1f m/s, Leistung: %0.0f W\n', param.v, param.P);
-
-fprintf('==========================================\n');
