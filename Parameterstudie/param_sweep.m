@@ -46,12 +46,12 @@ for i = 1:length(v)
             fprintf('Die Berechnung konnte nicht fertig gestellt werden.\n');
         end
         KH{i,j}.v = v(i);
-        KH{i,j}.P = P(i);
+        KH{i,j}.P = P(j);
         fprintf('==========================================\n');
     end
 end
 
 %% Shutdown und Speichern
-clear i j KH_geom Reason fmax Amax vsmax dz vmax param path1
+clear i j KH_geom Reason fmax Amax vsmax dz vmax param path1 err
 save('KH_sweep.mat');
 
