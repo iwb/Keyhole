@@ -4,9 +4,9 @@ function [ KH_geom, Reason ] = calcKeyhole(zResolution)
 %   Rückgabewert ist eine 3xn Matrix. IN der ersten Spalte ist der
 %   zugehörige z-Wert, in der zweiten der Scheitelpunkt und in der dritten
 %	Spalte der Radius. Der zweite Rückgabewert gibt den Abbruchgrund an.
-
 run('init.m')
-
+% Plotdata
+plotdata = [];
 %% VHP berechnen
 versatz = 0.5 * param.w0;
 vhp1 = vhp_dgl(0, param);
@@ -56,7 +56,7 @@ while (true)
 	arguments.prevRadius = currentAlpha;
 	
 	% Berechnung des neuen Scheitelpunktes
-	func1 = @(A) khz_func1(A, arguments, param);
+	func1 = @(A) khz_func1(A, arguments, param, plotdata);
 	currentA = fzero(func1, currentA);
 	
 	% Abbruchkriterium
@@ -70,7 +70,7 @@ while (true)
 	end
 	
 	% Berechnung des Radius
-	func2 = @(alpha) khz_func2(alpha, currentA, arguments, param);
+	func2 = @(alpha) khz_func2(alpha, currentA, arguments, param, plotdata);
 	alpha_interval(1) = 0.5*currentA; % Minimalwert
 	alpha_interval(2) = 1.05 * currentAlpha; % Maximalwert
 	currentAlpha = fzero(func2, alpha_interval);

@@ -48,4 +48,3 @@ param.scaled.hm = param.Hm / (param.cp*(param.Tv - param.T0));
 param.scaled.waveLength = param.waveLength / param.w0;
 % Skalierter Fokus
 param.scaled.fokus = param.fokus / param.w0;
-
