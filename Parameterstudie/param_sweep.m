@@ -9,8 +9,8 @@ vmax = sqrt(vsmax^2+(2*pi*fmax*Amax)^2+4*pi*fmax*Amax*vsmax); % [m/s]
 % Auflösung in z-Richtung
 dz = 20; % [µm]
 % Bereiche
-v = [5/60 6/60];%1/60:10/60:vmax; % [m/s]
-P = [2000 3000]; %1000:25:3000; % [W]
+v = 1/60:10/60:vmax; % [m/s]
+P = 1000:25:3000; % [W]
 % Vorbelegung
 run('init.m');
 KH = cell(length(v), length(P));
