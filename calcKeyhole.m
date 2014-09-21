@@ -1,4 +1,4 @@
-function [ KH_geom, Reason ] = calcKeyhole(zResolution)
+function [ KH_geom, Reason ] = calcKeyhole(zResolution, param)
 %calcKeyhole Berechnet die Geometrie des Keyholes.
 %	Parameter ist die Diskretisierung in z-Richtung in µm.
 %   Rückgabewert ist eine 3xn Matrix. IN der ersten Spalte ist der
@@ -22,7 +22,7 @@ dz = -zResolution * 1e-6;
 d_zeta = dz / param.w0;
 
 % Blechdicke
-max_z = 5e-3;
+max_z = 10e-3;
 max_zindex = ceil(max_z/-dz);
 
 Apex = NaN(max_zindex, 1);
