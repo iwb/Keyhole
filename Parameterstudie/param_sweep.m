@@ -8,12 +8,13 @@ cd(path1);
 fmax = 2000; % [Hz]
 Amax = 1e-3; % [m]
 vsmax = 12/60; % [m/s]
-vmax = sqrt(vsmax^2+(2*pi*fmax*Amax)^2+4*pi*fmax*Amax*vsmax); % [m/s]
+% vmax = sqrt(vsmax^2+(2*pi*fmax*Amax)^2+4*pi*fmax*Amax*vsmax); % [m/s]
+vmax = 5.7/60; % Meximale Bahngeschwindigkeit berechnet aus 12 m/min Vorschub und der maximalen f-A-Kombination die der Scanner hergibt
 % Auflösung in z-Richtung
 dz = 20; % [µm]
 % Bereiche
-v = 1/60:10/60:vmax; % [m/s]
-P = 1000:25:3000; % [W]
+v = 1/60:0.05/60:vmax; % [m/s]
+P = 1000:20:3000; % [W]
 % Vorbelegung
 run('init.m');
 KH = cell(length(v), length(P));
