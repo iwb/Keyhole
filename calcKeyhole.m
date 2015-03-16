@@ -4,11 +4,16 @@ function [ KH_geom, Reason ] = calcKeyhole(zResolution)
 %   Rückgabewert ist eine 3xn Matrix. IN der ersten Spalte ist der
 %   zugehörige z-Wert, in der zweiten der Scheitelpunkt und in der dritten
 %	Spalte der Radius. Der zweite Rückgabewert gibt den Abbruchgrund an.
+<<<<<<< HEAD
 
 run('init.m')
 % Plotdata
 plotdata = [];
 
+=======
+% Plotdata
+plotdata = [];
+>>>>>>> TestBranch
 %% VHP berechnen
 versatz = 0.5 * param.w0;
 vhp1 = vhp_dgl(0, param);
